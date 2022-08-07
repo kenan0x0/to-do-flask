@@ -1,0 +1,4 @@
+# List the start up tasks. Learn more https://www.gitpod.io/docs/config-start-tasks/
+tasks:
+  - init: pip install -r requirements.txt
+    command: python app.py
