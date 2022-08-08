@@ -22,7 +22,7 @@
                 <input type="password" name="login-password" id="login-password" placeholder="*********" required>
             </label>
             <input type="submit" value="Login">
-            <small>No account yet. You can create one <a href="{{ url_for('register') }}">here</a>.</small>
+            <small>No account yet? You can create one <a href="{{ url_for('register') }}">here</a>.</small>
             {% if msg is not none %}
                 <div id="err-block">
                     <small id="err-msg">{{msg}}</small>

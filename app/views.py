@@ -65,10 +65,10 @@ def login():
 
     return render_template('login.html', msg=msg)
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
     if not current_user.is_authenticated:
-       return render_template('login.html', msg="Unauthorized, You must login first!")
+       return redirect(url_for('login'))
     
     return render_template('index.html')
 
