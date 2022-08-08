@@ -6,7 +6,6 @@ from jinja2 import TemplateNotFound
 
 from app import app, lm, db, bc
 from app.models import Users
-from app.forms import LoginForm, RegisterForm
 
 @lm.user_loader
 def load_user(user_id):
@@ -21,72 +20,42 @@ def logout():
 # Register a new user
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    
-    # declare the Registration Form
-    form = RegisterForm(request.form)
+    msg = None
 
-    msg     = None
-    success = False
+    if request.method == "POST":
 
-    if request.method == 'GET': 
+        username = request.form.get('register-username')
+        password = request.form.get('register-password') 
+        email = request.form.get('register-email')
 
-        return render_template( 'register.html', form=form, msg=msg )
-
-    # check if both http method is POST and form is valid on submit
-    if form.validate_on_submit():
-
-        # assign form data to variables
-        username = request.form.get('username', '', type=str)
-        password = request.form.get('password', '', type=str) 
-        email    = request.form.get('email'   , '', type=str) 
-
-        # filter User out of database through username
         user = Users.query.filter_by(user=username).first()
-
-        # filter User out of database through username
         user_by_email = Users.query.filter_by(email=email).first()
 
         if user or user_by_email:
             msg = 'Error: User exists!'
-        
+
         else:         
-
             pw_hash = bc.generate_password_hash(password)
-
             user = Users(username, email, pw_hash)
+            db.session.add(user)
+            db.session.commit()
+            msg = 'User created, please <a href="' + url_for('login') + '">login</a>'         
 
-            user.save()
+    return render_template( 'register.html', msg=msg)
 
-            msg     = 'User created, please <a href="' + url_for('login') + '">login</a>'     
-            success = True
 
-    else:
-        msg = 'Input error'     
-
-    return render_template( 'register.html', form=form, msg=msg, success=success )
-
-# Authenticate user
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     
-    # Declare the login form
-    form = LoginForm(request.form)
-
-    # Flask message injected into the page, in case of any errors
     msg = None
 
-    # check if both http method is POST and form is valid on submit
-    if form.validate_on_submit():
+    if request.method == "POST":
+        username = request.form.get('login-username')
+        password = request.form.get('login-password')
 
-        # assign form data to variables
-        username = request.form.get('username', '', type=str)
-        password = request.form.get('password', '', type=str) 
-
-        # filter User out of database through username
         user = Users.query.filter_by(user=username).first()
 
         if user:
-            
             if bc.check_password_hash(user.password, password):
                 login_user(user)
                 return redirect(url_for('index'))
@@ -95,27 +64,11 @@ def login():
         else:
             msg = "Unknown user"
 
-    return render_template( 'login.html', form=form, msg=msg )
+    return render_template('login.html', msg=msg)
 
-# App main route + generic routing
-@app.route('/', defaults={'path': 'index'})
-@app.route('/<path>')
-def index(path):
+@app.route('/')
+def index():
 
     #if not current_user.is_authenticated:
     #    return redirect(url_for('login'))
-
-    try:
-
-        return render_template( 'index.html' )
-    
-    except TemplateNotFound:
-        return render_template('page-404.html'), 404
-    
-    except:
-        return render_template('page-500.html'), 500
-
-# Return sitemap
-@app.route('/sitemap.xml')
-def sitemap():
-    return send_from_directory(os.path.join(app.root_path, 'static'), 'sitemap.xml')
+    return render_template( 'index.html' )
