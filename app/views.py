@@ -41,7 +41,7 @@ def register():
             db.session.commit()
             msg = 'User created, you can now login.'
 
-    return render_template( 'register.html', msg=msg)
+    return render_template('register.html', msg=msg)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -67,7 +67,11 @@ def login():
 
 @app.route('/')
 def index():
-
-    #if not current_user.is_authenticated:
-    #    return redirect(url_for('login'))
+    if not current_user.is_authenticated:
+       return render_template('login.html', msg="Unauthorized, You must login first!")
+    
     return render_template('index.html')
+
+@app.errorhandler(404)
+def not_found(e):
+  return redirect(url_for("index"))
