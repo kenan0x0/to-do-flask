@@ -39,14 +39,13 @@ def register():
             user = Users(username, email, pw_hash)
             db.session.add(user)
             db.session.commit()
-            msg = 'User created, please <a href="' + url_for('login') + '">login</a>'         
+            msg = 'User created, you can now login.'
 
     return render_template( 'register.html', msg=msg)
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    
     msg = None
 
     if request.method == "POST":
@@ -71,4 +70,4 @@ def index():
 
     #if not current_user.is_authenticated:
     #    return redirect(url_for('login'))
-    return render_template( 'index.html' )
+    return render_template('index.html')
