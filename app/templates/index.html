@@ -10,7 +10,12 @@
 <body>
 
     <h3>Welcome {{current_user.email}}</h3>
-    
+    <form method="post">
+        <label for="task">
+            <input type="text" name="task" id="task">
+        </label>
+        <input type="submit" value="Add Task">
+    </form>
     <a href="/logout" type="button">Logout</a>
     
 </body>

@@ -5,7 +5,7 @@ from werkzeug.exceptions import HTTPException, NotFound, abort
 from jinja2 import TemplateNotFound
 
 from app import app, lm, db, bc
-from app.models import Users
+from app.models import Users, Tasks
 
 @lm.user_loader
 def load_user(user_id):
@@ -69,6 +69,11 @@ def login():
 def index():
     if not current_user.is_authenticated:
        return redirect(url_for('login'))
+
+    if request.method == "POST":
+        new_task = request.form.get("task")
+        print(new_task)
+    
     
     return render_template('index.html')
 

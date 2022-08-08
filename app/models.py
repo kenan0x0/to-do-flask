@@ -8,6 +8,11 @@ class Users(db.Model, UserMixin):
     email = db.Column(db.String(120), unique = True)
     password = db.Column(db.String(500))
 
+    def __init__(self, user, email, password):
+        self.user = user
+        self.password = password
+        self.email = email
+
 class Tasks(db.Model, UserMixin):
     __tablename__ = 'Tasks'
     user_id = db.Column(db.Integer(), db.ForeignKey("Users.id"), primary_key=True, unique=False, nullable=False)
