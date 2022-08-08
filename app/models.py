@@ -8,15 +8,9 @@ class Users(db.Model, UserMixin):
     email = db.Column(db.String(120), unique = True)
     password = db.Column(db.String(500))
 
-    def __init__(self, user, email, password):
-        self.user = user
-        self.password = password
-        self.email = email
-
-    def __repr__(self):
-        return str(self.id) + ' - ' + str(self.user)
-
-    def save(self):
-        db.session.add ( self )
-        db.session.commit( )
-        return self 
+class Tasks(db.Model, UserMixin):
+    __tablename__ = 'Tasks'
+    user_id = db.Column(db.Integer(), db.ForeignKey("Users.id"), primary_key=True, unique=False, nullable=False)
+    task_completed = db.Column(db.Boolean, default=False, unique=False, nullable=False)
+    task_category = db.Column(db.String, unique=False, nullable=False)
+    task_date = db.Column(db.Date, unique=False, nullable=True)
