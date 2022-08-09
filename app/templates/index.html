@@ -4,19 +4,61 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+    <link rel="stylesheet" href="https://kenan0x0.github.io/to-do-flask/app/static/assets/css/jside-menu.css">
+    <link rel="stylesheet" href="https://kenan0x0.github.io/to-do-flask/app/static/assets/css/jside-skins.css">
+    <script srv="https://kenan0x0.github.io/to-do-flask/app/static/assets/js/jquery.jside.menu.js"></script>
     <link rel="stylesheet" href="/static/assets/css/custom.css">
     <title>Homepage - To Do List</title>
 </head>
 <body>
 
-    <h3>Welcome {{current_user.email}}</h3>
-    <form method="post">
-        <label for="task">
-            <input type="text" name="task" id="task">
-        </label>
-        <input type="submit" value="Add Task">
-    </form>
-    <a href="/logout" type="button">Logout</a>
+    <menu class="menubar">
+        <menuitem>
+        <button class="menu-trigger"> <i class="material-icons">menu</i> </button>
+        </menuitem>
+     </menu>
+     <div class="menu-body visibility">
+     <div class="menu-head">
+        <span class="layer">
+     <div class="col">
+       <div class="row for-pic">
+        <div class="profile-pic">     
+        <img src="" alt="Profile Image" /> 
+              </div>
+       </div>
+              <div class="row for-name">
+        <h3 title="Username">Username here</h3>
+             <span class="tagline">User</span>
+               </div>
+              </div>
+       </span>
+     </div>
+     <nav class="menu-container">
+     <ul class="menu-items">
+     <li><a href="#1"> <i class="material-icons">widgets</i>  Main item one </a></li> 
+     <li><a href="#1"> <i class="material-icons">bar_chart</i> Main item two </a></li>
+     <li> <a href="#1">  <i class="material-icons">color_lens</i>  Main item four </a></li> 
+     <li> <a href="#1">  <i class="material-icons">pie_chart</i>  Main item five </a></li> 
+     <li>  <a href="#1">  <i class="material-icons">highlight</i> Main item five </a></li> 
+     <li> <a href="#1"> <i class="material-icons">format_size</i>  Main item six </a></li> 
+     </ul>
+     </nav>
+     </div>
+     
+     
+     <script>
+     $(function(){
+     $(".menu-container").jSideMenu({
+         jSidePosition: "position-left",
+         jSideSticky: true,
+         jSideSkin: "between-clouds",
+          });
+     }); 
+     </script>
     
 </body>
 </html>
