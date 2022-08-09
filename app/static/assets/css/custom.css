@@ -60,5 +60,40 @@ input[type=submit]:hover{
 }
 
 .page-cont{
+    width: 80%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
     margin-top: 70px;
+}
+
+/* Task page styles */
+#add-task-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.page-cont #add-task-form{
+    border: 3px solid black;
+    box-shadow: 10px 10px 1px black;
+    padding: 30px;
+    border-radius: 10px;
+    background-color: #ebeced;
+}
+
+.page-cont .form_elem{
+    width: 100%;
+}
+
+#add-task-form input[type="text"], input[type="date"]{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
 }

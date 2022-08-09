@@ -4,11 +4,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8" />
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
+    <!-- Navbar -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="https://kenan0x0.github.io/to-do-flask/app/static/assets/js/jquery.jside.menu.js"></script>
     <link rel="stylesheet" href="https://kenan0x0.github.io/to-do-flask/app/static/assets/css/jside-menu.css">
     <link rel="stylesheet" href="https://kenan0x0.github.io/to-do-flask/app/static/assets/css/jside-skins.css">
+
+
+    <!-- Slim Select -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.27.1/slimselect.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.27.1/slimselect.min.css" rel="stylesheet"></link>
+
+
+    <!-- Global -->
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/css/custom.css') }}">
     <title>Add Task - To Do List</title>
 </head>
@@ -45,10 +55,32 @@
     </nav>
     </div>
 
-    
+
     <!-- Page content goes here -->
     <div class="page-cont">
-        <p>hello</p>
+        <h3>Add New Task</h3>
+        <form id="add-task-form" method="post">
+            
+            <label class="form_elem" for="task">
+                Task Text
+                <input type="text" name="task" id="task" required>
+            </label>
+
+            <label class="form_elem" for="label">
+                Task Label
+                <select name="label" id="label">
+                    <option data-placeholder="true"></option>
+                    <option value="gaming">gaming</option>
+                    <option value="school">school</option>
+                </select>
+            </label>
+
+            <label class="form_elem" for="task_date">
+                Task Date
+                <input type="date" name="task_date" id="task_date">
+            </label>
+            <input type="submit" value="Create Task">
+        </form>
     </div>
      
      
@@ -61,6 +93,42 @@
           });
      }); 
      </script>
+
+    <script>
+    const taskSelect = new SlimSelect({
+    select: '#label',
+    placeholder: "Add label to task",
+    showSearch: true,
+    allowDeselect: true,
+    showOptionTooltips: true,
+    addable: function (value) {
+    alreadyExists =  addOrDont(value);
+    if (alreadyExists){
+        return false;
+    }else{
+        return {
+            text: value,
+            value: value
+        }
+    }
+}
+})
+
+function addOrDont(newElm){      
+    allChildren = [];
+    allFound = taskSelect.data.data;
+
+    for(var i = 0; i < allFound.length; i++){
+        optionText = allFound[i].value;
+        if (optionText){
+            allChildren.push(optionText.toLowerCase());
+        }else{}
+    }
+
+    return allChildren.includes(newElm.toLowerCase());
+}
+
+    </script>
     
 </body>
 </html>
