@@ -112,6 +112,26 @@ def add_task():
     
     return render_template('add-task.html', msg=msg, cate=cate)
 
+
+
+@app.route('/tasks-list', methods=['GET', 'POST'])
+def tasks_list():
+    msg = None
+    cate = None
+
+    if not current_user.is_authenticated:
+       return redirect(url_for('login'))
+
+
+    user_id = Users.query.filter_by(email=current_user.email).first().id
+    user_tasks = Tasks.query.filter_by(user_id=user_id).all()
+
+    if request.method == "POST":
+        print("yes")
+
+    
+    return render_template('tasks-list.html', msg=msg, cate=cate, user_tasks=user_tasks)
+
 @app.errorhandler(404)
 def not_found(e):
   return redirect(url_for("index"))
