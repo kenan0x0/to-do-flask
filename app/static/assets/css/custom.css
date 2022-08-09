@@ -54,9 +54,13 @@ input[type=submit]:hover{
     color: white;
 }
 
-#err-msg{
+#err-msg-error{
     font-style: italic;
     color: darkred;
+}
+#err-msg-success{
+    font-style: italic;
+    color: darkgreen;
 }
 
 .page-cont{

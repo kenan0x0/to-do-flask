@@ -25,7 +25,7 @@
             <small>No account yet? You can create one <a href="{{ url_for('register') }}">here</a>.</small>
             {% if msg is not none %}
                 <div id="err-block">
-                    <small id="err-msg">{{msg}}</small>
+                    <small id="err-msg-{{cate}}">{{msg}}</small>
                 </div>
             {% endif %}
         </form>
