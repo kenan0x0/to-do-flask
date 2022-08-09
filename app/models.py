@@ -4,14 +4,16 @@ from flask_login import UserMixin
 class Users(db.Model, UserMixin):
     __tablename__ = 'Users'
     id = db.Column(db.Integer, primary_key=True)
-    user = db.Column(db.String(64), unique = True)
-    email = db.Column(db.String(120), unique = True)
+    user = db.Column(db.String(64), unique=True)
+    email = db.Column(db.String(120), unique=True)
     password = db.Column(db.String(500))
+    user_image = db.Column(db.String(), unique=False, nullable=True)
 
-    def __init__(self, user, email, password):
+    def __init__(self, user, email, password, user_image):
         self.user = user
         self.password = password
         self.email = email
+        self.user_image = user_image
 
 class Tasks(db.Model, UserMixin):
     __tablename__ = 'Tasks'
