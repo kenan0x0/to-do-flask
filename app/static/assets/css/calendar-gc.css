@@ -91,13 +91,13 @@
   font-weight: 800;
   line-height: 38.09px;
   overflow-y: auto;
-  color: #babfc4;
+  color: black;
   text-decoration: none;
   display: block;
 }
 
 .gc-calendar table.calendar td .today .day-number {
-  color: #4C6FFF;
+  color: #fab700;
 }
 
 .gc-calendar table.calendar a {
@@ -123,7 +123,7 @@
   width: 90%;
   height: 2px;
   border-radius: 1px;
-  background-color: #8f8f93;
+  background-color: white;
   bottom: 0px;
   left: 0;
   position: absolute;
