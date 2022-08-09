@@ -77,6 +77,22 @@ def index():
     
     return render_template('index.html')
 
+@app.route('/add-task', methods=['GET', 'POST'])
+def add_task():
+    if not current_user.is_authenticated:
+       return redirect(url_for('login'))
+
+    if request.method == "POST":
+        new_task = request.form.get("task")
+        label = request.form.get("label")
+        task_date = request.form.get("task_date")
+        print(new_task)
+        print(label)
+        print(task_date)
+    
+    
+    return render_template('add_task.html')
+
 @app.errorhandler(404)
 def not_found(e):
   return redirect(url_for("index"))
