@@ -17,6 +17,10 @@
     <link rel="stylesheet" href="https://kenan0x0.github.io/to-do-flask/app/static/assets/css/jside-skins.css">
 
 
+    <!-- carousel plugin -->
+    <script src="https://kenan0x0.github.io/to-do-flask/app/static/assets/js/carousel.js"></script>
+    <link rel="stylesheet" href="https://kenan0x0.github.io/to-do-flask/app/static/assets/css/carousel.css">
+
     <!-- Jquery modal -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
@@ -68,6 +72,20 @@
     <div class="page-cont">
         <div id="calendar"></div>
         <hr>
+        <div id="dashboard-stats">
+            <h3>Dashboard</h3>
+            <div class="stats-slider">
+                <div>
+                  <div class="box">1</div>
+                </div>
+                <div>
+                  <div class="box">2</div>
+                </div>
+                <div>
+                  <div class="box">3</div>
+                </div>
+            </div>
+        </div>
     </div>
 
 
@@ -117,6 +135,10 @@
             nextIcon: '&#x3e;',
             events: calDates
         })
+     </script>
+
+     <script>
+        new ElderCarousel('.stats-slider', { items: 2 })
      </script>
     
 
