@@ -48,8 +48,8 @@
     <nav class="menu-container">
         <ul class="menu-items">
             <li><a href="/"> <i class="material-icons">speed</i>Dashboard</a></li>
-            <li><a href="#"> <i class="material-icons">edit</i>Add Task</a></li>
-            <li> <a href="/tasks-list">  <i class="material-icons">checklist</i>Tasks List</a></li>
+            <li><a href="/add-task"> <i class="material-icons">edit</i>Add Task</a></li>
+            <li> <a href="/#">  <i class="material-icons">checklist</i>Tasks List</a></li>
             <li> <a href="/logout">  <i class="material-icons">logout</i>Logout</a></li>
         </ul>
     </nav>
@@ -58,50 +58,39 @@
 
     <!-- Page content goes here -->
     <div class="page-cont">
-        <h3>Add New Task</h3>
-        <form id="add-task-form" method="post">
-            
-            <label class="form_elem" for="task">
-                Task Title*
-                <input type="text" name="task-title" id="task-title" required>
-            </label>
+        <h3>Tasks list</h3>
+        <div id="tasks-elem">
+            {% if user_tasks|length == 0 %}
+                <p id="no-tasks">You haven't created any tasks yet. Start <a href="/add-task">here</a>.</p>
+            {% else %}
+                {% for task in user_tasks %}
+                    <div class="ind-task">
+                        <div class="task-header">
+                            <h3>{{task.task_title}}</h3>
+                            <div class="inner-stat" title="Task Date"><i class="material-icons">event</i>{{task.task_date}}</div>
+                        </div>
+                        <div class="inner-stat" title="Task Description"><i class="material-icons">description</i>{{task.task_body}}</div><br>
 
-            <label class="form_elem" for="task-body">
-                Task Body*
-                <textarea name="task-body" id="task-body" required></textarea>
-            </label>
-
-            <label class="form_elem" for="label">
-                Task Label
-                <select name="label" id="label">
-                    <option data-placeholder="true"></option>
-                    {% for t_c in task_cate %}
-                        <option value="{{t_c}}">{{t_c}}</option>
-                    {% endfor %}
-                </select>
-            </label>
-
-            <label class="form_elem" for="task_date">
-                Task Date
-                <input type="date" name="task_date" id="task_date">
-            </label>
-            <input type="submit" value="Create Task">
-            <small>(*) Required</small>
-            {% if msg is not none %}
-                <div id="err-block">
-                    <small id="err-msg-{{cate}}">{{msg}}</small>
-                </div>
+                        <div class="task-footer">
+                            <div class="inner-stat" title="Task Category"><i class="material-icons">category</i>{{task.task_category}}</div>
+                            {% if task.task_completed %}
+                                {% set var_class='task-done' %}
+                                {% set var_text='Task finished' %}
+                            {% else %}
+                                {% set var_class='task-not-done' %}
+                                {% set var_text='Task in progress' %}
+                            {% endif %}
+                            <i class="{{var_class}}">{{var_text}}</i>
+                        </div>                        
+                    </div>
+                {% endfor %}
             {% endif %}
-        </form>
+        </div>
+        
     </div>
      
      
 
-    <script>
-        setTimeout(() => {
-            document.getElementById("err-block").remove();
-        }, 5000);
-    </script>
 
      <script>
      $(function(){
@@ -112,42 +101,6 @@
           });
      }); 
      </script>
-
-    <script>
-    const taskSelect = new SlimSelect({
-    select: '#label',
-    placeholder: "Add label to task",
-    showSearch: true,
-    allowDeselect: true,
-    showOptionTooltips: true,
-    addable: function (value) {
-    alreadyExists =  addOrDont(value);
-    if (alreadyExists){
-        return false;
-    }else{
-        return {
-            text: value,
-            value: value
-        }
-    }
-}
-})
-
-function addOrDont(newElm){      
-    allChildren = [];
-    allFound = taskSelect.data.data;
-
-    for(var i = 0; i < allFound.length; i++){
-        optionText = allFound[i].value;
-        if (optionText){
-            allChildren.push(optionText.toLowerCase());
-        }else{}
-    }
-
-    return allChildren.includes(newElm.toLowerCase());
-}
-
-    </script>
     
 </body>
 </html>
