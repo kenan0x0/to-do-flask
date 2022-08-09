@@ -62,7 +62,7 @@
         <form id="add-task-form" method="post">
             
             <label class="form_elem" for="task">
-                Task Text
+                Task Text*
                 <input type="text" name="task" id="task" required>
             </label>
 
@@ -80,10 +80,23 @@
                 <input type="date" name="task_date" id="task_date">
             </label>
             <input type="submit" value="Create Task">
+            <small>(*) Required</small>
+            {% if msg is not none %}
+                <div id="err-block">
+                    <small id="err-msg-{{cate}}">{{msg}}</small>
+                </div>
+            {% endif %}
         </form>
     </div>
      
      
+
+    <script>
+        setTimeout(() => {
+            document.getElementById("err-block").remove();
+        }, 5000);
+    </script>
+    
      <script>
      $(function(){
      $(".menu-container").jSideMenu({

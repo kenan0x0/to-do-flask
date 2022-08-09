@@ -87,6 +87,9 @@ def index():
 
 @app.route('/add-task', methods=['GET', 'POST'])
 def add_task():
+    msg = None
+    cate = None
+
     if not current_user.is_authenticated:
        return redirect(url_for('login'))
 
@@ -96,11 +99,18 @@ def add_task():
         task_date = datetime.strptime(request.form.get("task_date"), '%Y-%m-%d')
         user_id = Users.query.filter_by(email=current_user.email).first().id
         
-        task = Tasks(user_id=user_id, task_body=new_task, task_completed=False, task_date=task_date, task_category=label)
-        db.session.add(task)
-        db.session.commit()
+        if new_task is not None:
+            task = Tasks(user_id=user_id, task_body=new_task, task_completed=False, task_date=task_date, task_category=label)
+            db.session.add(task)
+            db.session.commit()
+            msg = "Task successfully created"
+            cate = "success"
+        else:
+            msg = "Task Text is required"
+            cate = "error"
+
     
-    return render_template('add-task.html')
+    return render_template('add-task.html', msg=msg, cate=cate)
 
 @app.errorhandler(404)
 def not_found(e):
