@@ -18,8 +18,9 @@
 
 
     <!-- carousel plugin -->
-    <script src="https://kenan0x0.github.io/to-do-flask/app/static/assets/js/carousel.js"></script>
-    <link rel="stylesheet" href="https://kenan0x0.github.io/to-do-flask/app/static/assets/css/carousel.css">
+    <script src="https://kenan0x0.github.io/to-do-flask/app/static/assets/js/slick.js"></script>
+    <link rel="stylesheet" href="https://kenan0x0.github.io/to-do-flask/app/static/assets/css/slick.css">
+    <link rel="stylesheet" href="https://kenan0x0.github.io/to-do-flask/app/static/assets/css/slick-theme.css">
 
     <!-- Jquery modal -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
@@ -72,19 +73,28 @@
     <div class="page-cont">
         <div id="calendar"></div>
         <hr>
-        <div id="dashboard-stats">
+        <div id="stats-section">
             <h3>Dashboard</h3>
-            <div class="stats-slider">
-                <div>
-                  <div class="box">1</div>
+            <section class="regular slider">
+                <div class="box">
+                    <div class="inner-box">
+                        <p>Tasks Created</p>
+                        <i>1</i>
+                    </div>
                 </div>
-                <div>
-                  <div class="box">2</div>
+                <div class="box">
+                    <div class="inner-box">
+                        <p>Tasks Completed</p>
+                        <i>2</i>
+                    </div>
                 </div>
-                <div>
-                  <div class="box">3</div>
+                <div class="box">
+                    <div class="inner-box">
+                        <p>Tasks In progress</p>
+                        <i>3</i>
+                    </div>
                 </div>
-            </div>
+            </section>
         </div>
     </div>
 
@@ -137,9 +147,14 @@
         })
      </script>
 
-     <script>
-        new ElderCarousel('.stats-slider', { items: 2 })
-     </script>
+<script type="text/javascript">
+      $(".regular").slick({
+        dots: true,
+        infinite: true,
+        slidesToShow: 2,
+        slidesToScroll: 1
+      });
+</script>
     
 
     {% include "footer.html" %}
