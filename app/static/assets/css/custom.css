@@ -244,3 +244,30 @@ textarea{
 .footer-elem:hover{
     text-decoration: underline;
 }
+
+/* carousel styles */
+.box {
+    width: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #232629;
+    border: 3px solid #FFF;
+    border-radius: 8px;
+    color: #FFF;
+    font-size: 26px;
+}
+
+#dashboard-stats {
+    margin-top: 10px;
+    width: 100%;
+}
+
+.stats-slider{
+    width: 90%;
+}
+
+#dashboard-stats h3 {
+    margin-bottom: 10px;
+    color: white;
+}
