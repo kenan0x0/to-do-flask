@@ -8,6 +8,7 @@ from app import app, lm, db, bc
 from app.models import Users, Tasks
 
 from datetime import datetime
+import base64
 
 @lm.user_loader
 def load_user(user_id):
@@ -31,6 +32,9 @@ def register():
         password = request.form.get('register-password') 
         email = request.form.get('register-email')
 
+        profile_image = request.files.get("register-profile-image", None)
+        image_content = f"data:{profile_image.content_type};charset=utf-8;base64,{base64.b64encode(profile_image.read()).decode('utf-8')}"
+
         user = Users.query.filter_by(user=username).first()
         user_by_email = Users.query.filter_by(email=email).first()
 
@@ -40,7 +44,7 @@ def register():
 
         else:         
             pw_hash = bc.generate_password_hash(password)
-            user = Users(username, email, pw_hash)
+            user = Users(username, email, pw_hash, image_content)
             db.session.add(user)
             db.session.commit()
             msg = 'User created, you can now login.'
