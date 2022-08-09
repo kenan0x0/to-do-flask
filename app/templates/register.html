@@ -9,6 +9,14 @@
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ url_for('static', filename='assets/img/favicon.ico') }}">
 
+
+    <!-- Jquery Filer -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery.filer@1.3.0/js/jquery.filer.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery.filer@1.3.0/css/jquery.filer.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery.filer@1.3.0/css/themes/jquery.filer-dragdropbox-theme.css">
+
+
     <!-- Global -->
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/css/custom.css') }}">
     <title>Register Page - To Do List</title>
@@ -17,7 +25,7 @@
 
 
     <div id="form-container">
-        <form method="post" id="register-form">
+        <form method="post" id="register-form" enctype=multipart/form-data>
             <h3 id="register-ph">To-Do-List | Register Form</h3>
             <label for="register-username">
                 Username
@@ -31,6 +39,12 @@
                 Password
                 <input type="password" name="register-password" id="register-password" placeholder="*********" required>
             </label>
+       
+            <label for="register-profile-image">
+                Profile Image
+                <input type="file" name="register-profile-image" id="register-profile-image">
+            </label>
+            
             <input type="submit" value="Register">
             <small>Do you already have an account? You can login <a href="{{ url_for('login') }}">here</a>.</small>
             {% if msg is not none %}
@@ -45,6 +59,15 @@
         setTimeout(() => {
             document.getElementById("err-block").remove();
         }, 5000);
+    </script>
+
+    <script>
+        $("#register-profile-image").filer({
+            limit: 1,
+            fileMaxSize: 10,
+            extensions: ["jpg", "png", "jpeg"],
+            showThumbs: true
+      });
     </script>
     
     {% include "footer.html" %}
