@@ -16,6 +16,7 @@ class Users(db.Model, UserMixin):
 class Tasks(db.Model, UserMixin):
     __tablename__ = 'Tasks'
     user_id = db.Column(db.Integer(), db.ForeignKey("Users.id"), primary_key=True, unique=False, nullable=False)
+    task_body = db.Column(db.String(500))
     task_completed = db.Column(db.Boolean, default=False, unique=False, nullable=False)
     task_category = db.Column(db.String, unique=False, nullable=False)
     task_date = db.Column(db.Date, unique=False, nullable=True)

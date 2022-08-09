@@ -7,6 +7,8 @@ from jinja2 import TemplateNotFound
 from app import app, lm, db, bc
 from app.models import Users, Tasks
 
+from datetime import datetime
+
 @lm.user_loader
 def load_user(user_id):
     return Users.query.get(int(user_id))
@@ -21,6 +23,7 @@ def logout():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     msg = None
+    cate = None
 
     if request.method == "POST":
 
@@ -33,6 +36,7 @@ def register():
 
         if user or user_by_email:
             msg = 'Error: User exists!'
+            cate = 'error'
 
         else:         
             pw_hash = bc.generate_password_hash(password)
@@ -40,13 +44,15 @@ def register():
             db.session.add(user)
             db.session.commit()
             msg = 'User created, you can now login.'
+            cate = 'success'
 
-    return render_template('register.html', msg=msg)
+    return render_template('register.html', msg=msg, cate=cate)
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     msg = None
+    cate = None
 
     if request.method == "POST":
         username = request.form.get('login-username')
@@ -60,10 +66,12 @@ def login():
                 return redirect(url_for('index'))
             else:
                 msg = "Wrong password. Please try again."
+                cate = 'error'
         else:
             msg = "Unknown user"
+            cate = 'error'
 
-    return render_template('login.html', msg=msg)
+    return render_template('login.html', msg=msg, cate=cate)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -85,11 +93,12 @@ def add_task():
     if request.method == "POST":
         new_task = request.form.get("task")
         label = request.form.get("label")
-        task_date = request.form.get("task_date")
-        print(new_task)
-        print(label)
-        print(task_date)
-    
+        task_date = datetime.strptime(request.form.get("task_date"), '%Y-%m-%d')
+        user_id = Users.query.filter_by(email=current_user.email).first().id
+        
+        task = Tasks(user_id=user_id, task_body=new_task, task_completed=False, task_date=task_date, task_category=label)
+        db.session.add(task)
+        db.session.commit()
     
     return render_template('add-task.html')
 
