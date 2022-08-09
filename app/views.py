@@ -132,10 +132,40 @@ def tasks_list():
     user_tasks = Tasks.query.filter_by(user_id=user_id).all()
 
     if request.method == "POST":
-        print("yes")
+        print("yes sir")
 
     
     return render_template('tasks-list.html', msg=msg, cate=cate, user_tasks=user_tasks, user_name=user_name)
+
+
+@app.route("/handleTasks/<task_id>/<req_type>", methods=['GET', 'POST'])
+def handle_tasks(task_id, req_type):
+    # TODO: add some verification
+    if req_type == "fk":
+        task_obj = Tasks.query.filter_by(id=task_id).first()
+        task_obj.task_completed = True
+        db.session.commit()
+    elif req_type == "ro":
+        task_obj = Tasks.query.filter_by(id=task_id).first()
+        task_obj.task_completed = False
+        db.session.commit()
+    elif req_type == "fd":
+        task_obj = Tasks.query.filter_by(id=task_id).delete()
+        db.session.commit()
+    elif req_type == "edit":
+        new_title = request.form.get("task_title")
+        new_body = request.form.get("task_body")
+        new_category = request.form.get("task_category")
+        new_date = datetime.strptime(request.form.get("task_date"), '%Y-%m-%d').date()
+        task_obj = Tasks.query.filter_by(id=task_id).first()
+        
+        task_obj.task_title = new_title
+        task_obj.task_body = new_body
+        task_obj.task_category = new_category
+        task_obj.task_date = new_date
+        db.session.commit()
+
+    return redirect(url_for("tasks_list"))
 
 @app.errorhandler(404)
 def not_found(e):

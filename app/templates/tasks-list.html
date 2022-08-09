@@ -13,6 +13,11 @@
     <link rel="stylesheet" href="https://kenan0x0.github.io/to-do-flask/app/static/assets/css/jside-skins.css">
 
 
+    <!-- Jquery modal -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+
+
     <!-- Slim Select -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.27.1/slimselect.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.27.1/slimselect.min.css" rel="stylesheet"></link>
@@ -81,13 +86,48 @@
                                 {% set var_text='Task in progress' %}
                             {% endif %}
                             <i class="{{var_class}}">{{var_text}}</i>
-                        </div>                        
+                        </div>
+                        <div class="task-actions">
+                            <a class="action-item" href="/handleTasks/{{task.id}}/fk">Finish and save |</a>
+                            <a class="action-item" href="/handleTasks/{{task.id}}/fd">Finish and delete |</a>
+                            <a class="action-item" href="/handleTasks/{{task.id}}/ro">Reopen |</a>
+                            <a class="action-item" href="#edit-modal-{{task.id}}" rel="modal:open">Edit</a>
+                        </div>
                     </div>
                 {% endfor %}
             {% endif %}
-        </div>
-        
+        </div>  
     </div>
+
+    {% for task in user_tasks %}
+    <div class="modal" id="edit-modal-{{task.id}}">
+        <h3>Edit Task</h3>
+        <hr>
+        <form class="edit-task-form" method="post">
+            
+            <label class="form_elem_edit" for="task-title-{{task.id}}">
+                Task Title
+                <input type="text" name="task-title-{{task.id}}" id="task-title-{{task.id}}" value="{{task.task_title}}">
+            </label>
+
+            <label class="form_elem_edit" for="task-body-{{task.id}}">
+                Task Body
+                <textarea name="task-body-{{task.id}}" id="task-body-{{task.id}}">{{task.task_body}}</textarea>
+            </label>
+
+            <label class="form_elem_edit" for="label-{{task.id}}">
+                Task Label
+                <input type="text" name="label-{{task.id}}" id="label-{{task.id}}" value="{{task.task_category}}">
+            </label>
+
+            <label class="form_elem_edit" for="task_date-{{task.id}}">
+                Task Date
+                <input type="date" name="task_date-{{task.id}}" id="task_date-{{task.id}}" value="{{task.task_date}}">
+            </label>
+            <input type="button" value="Edit Task" onclick="editTask('{{task.id}}')">
+        </form>
+    </div>
+    {% endfor %}
      
      
 
@@ -100,6 +140,32 @@
          jSideSkin: "moonlit",
           });
      }); 
+     </script>
+
+     <script>
+
+        function editTask(taskId){
+            let taskTitle = document.getElementById("task-title-" + taskId).value;
+            let taskBody = document.getElementById("task-body-" + taskId).value;
+            let taskLabel = document.getElementById("label-" + taskId).value;
+            let taskDate = document.getElementById("task_date-" + taskId).value;
+
+            var formData = new FormData();
+            formData.append("task_title", taskTitle);
+            formData.append("task_body", taskBody);
+            formData.append("task_category", taskLabel);
+            formData.append("task_date", taskDate);
+
+            $.ajax({
+                type: 'POST',
+                url: '/handleTasks/' + taskId + '/edit',
+                contentType: false,
+                processData: false,
+                data: formData,
+            });
+
+            location.reload();
+        }
      </script>
     
 </body>
