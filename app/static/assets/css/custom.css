@@ -217,3 +217,30 @@ textarea{
 .form_elem_edit{
     width: 100%;
 }
+
+/* Footer styles */
+.pages-footer{
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: #232629;
+    padding: 15px;
+}
+
+.footer-content{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer-elem{
+    text-decoration: none;
+    color: #babfc4;
+}
+
+.footer-elem:hover{
+    text-decoration: underline;
+}

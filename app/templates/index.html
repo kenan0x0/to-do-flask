@@ -3,11 +3,19 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8" />
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='assets/img/favicon.ico') }}">
+
+
+    <!-- Navbar -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="https://kenan0x0.github.io/to-do-flask/app/static/assets/js/jquery.jside.menu.js"></script>
     <link rel="stylesheet" href="https://kenan0x0.github.io/to-do-flask/app/static/assets/css/jside-menu.css">
     <link rel="stylesheet" href="https://kenan0x0.github.io/to-do-flask/app/static/assets/css/jside-skins.css">
+
+    <!-- Global -->
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/css/custom.css') }}">
     <title>Dashboard - To Do List</title>
 </head>
@@ -60,5 +68,7 @@
      }); 
      </script>
     
+
+    {% include "footer.html" %}
 </body>
 </html>
