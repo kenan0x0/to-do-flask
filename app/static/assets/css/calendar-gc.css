@@ -69,7 +69,7 @@
   line-height: 136.02%;
   padding: 2px;
   text-transform: uppercase;
-  color: #7A7A9D;
+  color: #232629;
   position: relative;
   padding-bottom: 12px;
 }
@@ -91,13 +91,13 @@
   font-weight: 800;
   line-height: 38.09px;
   overflow-y: auto;
-  color: black;
+  color: #232629;
   text-decoration: none;
   display: block;
 }
 
 .gc-calendar table.calendar td .today .day-number {
-  color: #fab700;
+  color: #191970;
 }
 
 .gc-calendar table.calendar a {
