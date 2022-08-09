@@ -9,10 +9,20 @@ from app.models import Users, Tasks
 
 from datetime import datetime
 import base64
+import hashlib
 
 @lm.user_loader
 def load_user(user_id):
     return Users.query.get(int(user_id))
+
+# Decide which profile image will be shown
+def user_profile_image(db_image, email):
+    if db_image is None:
+        GRAVATAR_ENDPOINT = "https://www.gravatar.com/avatar/"
+        user_image = (GRAVATAR_ENDPOINT+ hashlib.md5(email.encode("utf-8")).hexdigest())
+        return user_image
+    else:
+        return db_image
 
 # Logout user
 @app.route('/logout')
@@ -32,8 +42,10 @@ def register():
         password = request.form.get('register-password') 
         email = request.form.get('register-email')
 
-        profile_image = request.files.get("register-profile-image", None)
-        image_content = f"data:{profile_image.content_type};charset=utf-8;base64,{base64.b64encode(profile_image.read()).decode('utf-8')}"
+        image_content = None
+        profile_image = request.files.get("register-profile-image")
+        if profile_image.filename:
+            image_content = f"data:{profile_image.content_type};charset=utf-8;base64,{base64.b64encode(profile_image.read()).decode('utf-8')}"
 
         user = Users.query.filter_by(user=username).first()
         user_by_email = Users.query.filter_by(email=email).first()
@@ -83,13 +95,14 @@ def index():
        return redirect(url_for('login'))
 
     user_name = Users.query.filter_by(email=current_user.email).first().user
+    prof_pic = Users.query.filter_by(email=current_user.email).first().user_image
+    prof_pic = user_profile_image(db_image=prof_pic, email=current_user.email)
     user_id = Users.query.filter_by(email=current_user.email).first().id
     user_tasks = Tasks.query.filter_by(user_id=user_id).all()
 
     calendar_tasks = [[task.task_date.strftime("%m/%d/%Y").replace("/","-"), task.task_title, task.task_body, task.id] for task in user_tasks]
-    print(calendar_tasks)
     
-    return render_template('index.html', user_name=user_name, calendar_tasks=calendar_tasks)
+    return render_template('index.html', user_name=user_name, calendar_tasks=calendar_tasks, prof_pic=prof_pic)
 
 @app.route('/add-task', methods=['GET', 'POST'])
 def add_task():
@@ -101,6 +114,8 @@ def add_task():
 
     user_id = Users.query.filter_by(email=current_user.email).first().id
     user_name = Users.query.filter_by(email=current_user.email).first().user
+    prof_pic = Users.query.filter_by(email=current_user.email).first().user_image
+    prof_pic = user_profile_image(db_image=prof_pic, email=current_user.email)
     user_task_categories = [task.task_category for task in Tasks.query.filter_by(user_id=user_id).all()]
 
     if request.method == "POST":
@@ -120,7 +135,7 @@ def add_task():
             cate = "error"
 
     
-    return render_template('add-task.html', msg=msg, cate=cate, task_cate=user_task_categories, user_name=user_name)
+    return render_template('add-task.html', msg=msg, cate=cate, task_cate=user_task_categories, user_name=user_name, prof_pic=prof_pic)
 
 
 
@@ -129,6 +144,8 @@ def tasks_list():
     msg = None
     cate = None
     user_name = Users.query.filter_by(email=current_user.email).first().user
+    prof_pic = Users.query.filter_by(email=current_user.email).first().user_image
+    prof_pic = user_profile_image(db_image=prof_pic, email=current_user.email)
 
     if not current_user.is_authenticated:
        return redirect(url_for('login'))
@@ -141,7 +158,7 @@ def tasks_list():
         print("yes sir")
 
     
-    return render_template('tasks-list.html', msg=msg, cate=cate, user_tasks=user_tasks, user_name=user_name)
+    return render_template('tasks-list.html', msg=msg, cate=cate, user_tasks=user_tasks, user_name=user_name, prof_pic=prof_pic)
 
 
 @app.route("/handleTasks/<task_id>/<req_type>", methods=['GET', 'POST'])
