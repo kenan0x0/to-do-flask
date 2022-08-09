@@ -2,12 +2,12 @@
 
 .gc-calendar {
   font-family: 'Inter', sans-serif;
-  background-color: #fff;
+  /* background-color: #fff; */
   padding: 1rem;
 }
 
 .gc-calendar .gc-calendar-header {
-  background-color: #fff;
+  /* background-color: #fff; */
   padding: 2px;
   height: max-content;
   display: flex;
@@ -53,7 +53,7 @@
   font-style: normal;
   font-weight: 600;
   font-size: 28px;
-  color: #38385c;
+  color: #babfc4;
   line-height: 136.02%;
   min-width: 220px;
 }
@@ -83,7 +83,7 @@
 }
 
 .gc-calendar table.calendar td.prev-month .day-number, .gc-calendar table.calendar td.next-month .day-number {
-  color: #B5B5BD
+  color: white;
 }
 
 .gc-calendar table.calendar td .day-number {
@@ -91,7 +91,7 @@
   font-weight: 800;
   line-height: 38.09px;
   overflow-y: auto;
-  color: #38385c;
+  color: #babfc4;
   text-decoration: none;
   display: block;
 }
