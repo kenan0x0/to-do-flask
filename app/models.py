@@ -8,12 +8,14 @@ class Users(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True)
     password = db.Column(db.String(500))
     user_image = db.Column(db.String(), unique=False, nullable=True)
+    creation_time = db.Column(db.Date, nullable=False, unique=False)
 
-    def __init__(self, user, email, password, user_image):
+    def __init__(self, user, email, password, user_image, creation_time):
         self.user = user
         self.password = password
         self.email = email
         self.user_image = user_image
+        self.creation_time = creation_time
 
 class Tasks(db.Model, UserMixin):
     __tablename__ = 'Tasks'

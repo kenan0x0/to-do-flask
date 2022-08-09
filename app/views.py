@@ -56,7 +56,7 @@ def register():
 
         else:         
             pw_hash = bc.generate_password_hash(password)
-            user = Users(username, email, pw_hash, image_content)
+            user = Users(username, email, pw_hash, image_content, datetime.now().date())
             db.session.add(user)
             db.session.commit()
             msg = 'User created, you can now login.'
@@ -96,13 +96,24 @@ def index():
 
     user_name = Users.query.filter_by(email=current_user.email).first().user
     prof_pic = Users.query.filter_by(email=current_user.email).first().user_image
+    account_creation = Users.query.filter_by(email=current_user.email).first().creation_time
     prof_pic = user_profile_image(db_image=prof_pic, email=current_user.email)
     user_id = Users.query.filter_by(email=current_user.email).first().id
     user_tasks = Tasks.query.filter_by(user_id=user_id).all()
 
+
+    tasks_finished = 0
+    tasks_ongoing = 0
+    for task in user_tasks:
+        if task.task_completed:
+            tasks_finished += 1
+        else:
+            tasks_ongoing += 1
+    tasks_total = len(user_tasks)
+
     calendar_tasks = [[task.task_date.strftime("%m/%d/%Y").replace("/","-"), task.task_title, task.task_body, task.id] for task in user_tasks]
     
-    return render_template('index.html', user_name=user_name, calendar_tasks=calendar_tasks, prof_pic=prof_pic)
+    return render_template('index.html', user_name=user_name, calendar_tasks=calendar_tasks, prof_pic=prof_pic, tasks_total=tasks_total, tasks_finished=tasks_finished, tasks_ongoing=tasks_ongoing, account_creation=account_creation)
 
 @app.route('/add-task', methods=['GET', 'POST'])
 def add_task():
