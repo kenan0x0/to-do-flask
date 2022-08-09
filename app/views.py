@@ -78,12 +78,12 @@ def index():
     if not current_user.is_authenticated:
        return redirect(url_for('login'))
 
+    user_name = Users.query.filter_by(email=current_user.email).first().user
     if request.method == "POST":
-        new_task = request.form.get("task")
-        print(new_task)
+        print("hello")
     
     
-    return render_template('index.html')
+    return render_template('index.html', user_name=user_name)
 
 @app.route('/add-task', methods=['GET', 'POST'])
 def add_task():
@@ -94,6 +94,7 @@ def add_task():
        return redirect(url_for('login'))
 
     user_id = Users.query.filter_by(email=current_user.email).first().id
+    user_name = Users.query.filter_by(email=current_user.email).first().user
     user_task_categories = [task.task_category for task in Tasks.query.filter_by(user_id=user_id).all()]
 
     if request.method == "POST":
@@ -113,7 +114,7 @@ def add_task():
             cate = "error"
 
     
-    return render_template('add-task.html', msg=msg, cate=cate, task_cate=user_task_categories)
+    return render_template('add-task.html', msg=msg, cate=cate, task_cate=user_task_categories, user_name=user_name)
 
 
 
@@ -121,6 +122,7 @@ def add_task():
 def tasks_list():
     msg = None
     cate = None
+    user_name = Users.query.filter_by(email=current_user.email).first().user
 
     if not current_user.is_authenticated:
        return redirect(url_for('login'))
@@ -133,7 +135,7 @@ def tasks_list():
         print("yes")
 
     
-    return render_template('tasks-list.html', msg=msg, cate=cate, user_tasks=user_tasks)
+    return render_template('tasks-list.html', msg=msg, cate=cate, user_tasks=user_tasks, user_name=user_name)
 
 @app.errorhandler(404)
 def not_found(e):
