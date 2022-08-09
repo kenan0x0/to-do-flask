@@ -1,7 +1,7 @@
 tasks:
   - name: startup
-    init: >
+    init: |
       pip install -r requirements.txt
-      export FLASK_APP=run.py
-      export FLASK_ENV=development
+      export FLASK_APP="run.py"
+      export FLASK_ENV="development"
     command: flask run --host=0.0.0.0 --port=5000
