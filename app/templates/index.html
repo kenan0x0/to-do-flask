@@ -8,12 +8,24 @@
     <link rel="shortcut icon" href="{{ url_for('static', filename='assets/img/favicon.ico') }}">
 
 
+
     <!-- Navbar -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="https://kenan0x0.github.io/to-do-flask/app/static/assets/js/jquery.jside.menu.js"></script>
     <link rel="stylesheet" href="https://kenan0x0.github.io/to-do-flask/app/static/assets/css/jside-menu.css">
     <link rel="stylesheet" href="https://kenan0x0.github.io/to-do-flask/app/static/assets/css/jside-skins.css">
+
+
+    <!-- Jquery modal -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+
+
+    <!-- calendar plugin -->
+    <script src="https://kenan0x0.github.io/to-do-flask/app/static/assets/js/calendar-gc.js"></script>
+    <link rel="stylesheet" href="https://kenan0x0.github.io/to-do-flask/app/static/assets/css/calendar-gc.css">
+
 
     <!-- Global -->
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/css/custom.css') }}">
@@ -54,8 +66,17 @@
 
     <!-- Page content goes here -->
     <div class="page-cont">
-        <p>hello</p>
+        <div id="calendar"></div>
     </div>
+
+
+    {% for event in calendar_tasks %}
+        <div class="modal" id="event-modal-{{event[3]}}">
+            <h3>{{event[1]}}</h3>
+            <hr>
+            <p>{{event[2]}}</p>
+        </div>
+    {% endfor %}
      
      
      <script>
@@ -66,6 +87,35 @@
          jSideSkin: "moonlit",
           });
      }); 
+     </script>
+
+     <script>
+        let eventList = {{ calendar_tasks | tojson | safe }};
+        let calDates = [];
+        for(var i = 0; i < eventList.length; i++){
+            let taskId = eventList[i][3].toString();
+            calDates.push({
+                date: new Date(eventList[i][0]),
+                eventName: eventList[i][1],
+                dateColor: "red",
+                onclick(e, data){
+                    $("#event-modal-" + taskId).modal({
+                        closeExisting: true,
+                        clickClose: true,
+                        showClose: true,
+                        escapeClose: true,
+                        closeText: "Close",
+                        fadeDuration: 100
+                    });
+                },
+            });
+        }
+        var calendar = $("#calendar").calendarGC({
+            dayBegin: 0,
+            prevIcon: '&#x3c;',
+            nextIcon: '&#x3e;',
+            events: calDates
+        })
      </script>
     
 

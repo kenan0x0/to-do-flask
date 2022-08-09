@@ -79,11 +79,13 @@ def index():
        return redirect(url_for('login'))
 
     user_name = Users.query.filter_by(email=current_user.email).first().user
-    if request.method == "POST":
-        print("hello")
+    user_id = Users.query.filter_by(email=current_user.email).first().id
+    user_tasks = Tasks.query.filter_by(user_id=user_id).all()
+
+    calendar_tasks = [[task.task_date.strftime("%m/%d/%Y").replace("/","-"), task.task_title, task.task_body, task.id] for task in user_tasks]
+    print(calendar_tasks)
     
-    
-    return render_template('index.html', user_name=user_name)
+    return render_template('index.html', user_name=user_name, calendar_tasks=calendar_tasks)
 
 @app.route('/add-task', methods=['GET', 'POST'])
 def add_task():
