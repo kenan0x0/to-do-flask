@@ -16,6 +16,11 @@
     <link rel="stylesheet" href="https://kenan0x0.github.io/to-do-flask/app/static/assets/css/jside-skins.css">
 
 
+    <!-- Jquery Filer -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery.filer@1.3.0/js/jquery.filer.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery.filer@1.3.0/css/jquery.filer.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery.filer@1.3.0/css/themes/jquery.filer-dragdropbox-theme.css">
+
     <!-- Slim Select -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.27.1/slimselect.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.27.1/slimselect.min.css" rel="stylesheet"></link>
@@ -64,7 +69,63 @@
     <div class="page-cont">
         <h3>Settings</h3>
         <hr>
-        
+        <fieldset id="personal-info-block">
+            <legend>Personal Information</legend>
+            <form id="personal-info-form" method="post">
+                <label for="username">
+                    Username
+                    {% if user.user %}
+                        {% set username_val = user.user %}
+                    {% else %}
+                        {% set username_val = "" %}
+                    {% endif %}
+                    <input class="inputs" type="text" name="username" id="username" value="{{username_val}}" placeholder="Add Username">
+                </label>
+                <label for="full_name">
+                    Full Name
+                    {% if user.full_name %}
+                        {% set fullname_val = user.user %}
+                    {% else %}
+                        {% set fullname_val = "" %}
+                    {% endif %}
+                    <input class="inputs" type="text" name="full_name" id="full_name" value="{{fullname_val}}" placeholder="Add Full Name">
+                </label>
+                <label for="city">
+                    City
+                    {% if user.city %}
+                        {% set city_val = user.user %}
+                    {% else %}
+                        {% set city_val = "" %}
+                    {% endif %}
+                    <input class="inputs" type="text" name="city" id="city" value="{{city_val}}" placeholder="Add City">
+                </label>
+                <label for="profile-img">
+                    Profile Picture
+                    <div id="profile-img">
+                        <img src="{{prof_pic}}" id="setting-prof-pic" alt="Profile Image" />
+                        <input type="file" name="setting-profile-image" id="setting-profile-image">
+                    </div>
+                </label>
+                <input type="submit" value="Update Personal Information">
+            </form>
+         </fieldset>
+
+         <fieldset id="security-info-block">
+            <legend>Security Information</legend>
+            <form id="security-info-form" method="post">
+                <label for="password">
+                    Change Password
+                    <input class="inputs" type="password" name="password" id="password" onkeyup="passwordMatching();">
+                </label>
+                <label for="confirm-password">
+                    Confirm Password
+                    <input class="inputs" type="password" name="confirm-password" id="confirm-password" onkeyup="passwordMatching();">
+                </label>
+                <p id="message"></p>
+                <input type="submit" value="Update Password" id="pswd-btn" disabled>
+            </form>
+         </fieldset>
+        </div>
     </div>
 
 
@@ -76,6 +137,38 @@
             jSideSkin: "moonlit",
              });
         }); 
+    </script>
+
+    <script>
+        $("#setting-profile-image").filer({
+            limit: 1,
+            fileMaxSize: 10,
+            extensions: ["jpg", "png", "jpeg"],
+            showThumbs: true
+      });
+    </script>
+
+    <script>
+        function passwordMatching(){
+            let passwd = document.getElementById("password").value;
+            let confPswd = document.getElementById("confirm-password").value;
+            let pswdBtn = document.getElementById("pswd-btn");
+            let warmMsg = document.getElementById("message");
+
+            if(passwd === "" && confPswd === ""){
+                pswdBtn.disabled = true;
+                warmMsg.innerHTML = "";
+            }else if(passwd === confPswd){
+                pswdBtn.disabled = false;
+                warmMsg.innerHTML = "Matching";
+                warmMsg.style.color = "darkgreen";
+            }else{
+                pswdBtn.disabled = true;
+                warmMsg.innerHTML = "Not Matching";
+                warmMsg.style.color = "darkred";
+            }
+
+        }
     </script>
 
     {% include "footer.html" %}
