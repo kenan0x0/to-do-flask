@@ -307,7 +307,7 @@ textarea{
 }
 
 /* Settings styles */
-#personal-info-block, #security-info-block{
+#personal-info-block, #security-info-block, #account-info-block{
     margin-top: 25px;
     border-radius: 5px;
     padding: 10px;
@@ -320,7 +320,11 @@ textarea{
     margin-top: 35px;
 }
 
-#personal-info-block legend, #security-info-block legend{
+#account-info-block{
+    margin-top: 35px;
+}
+
+#personal-info-block legend, #security-info-block legend, #account-info-block legend{
     font-weight: bold;
     background-color: #232629;
     color: white;
@@ -360,4 +364,24 @@ textarea{
     border-radius: 50%;
     border: 1px solid rgba(255, 255, 255, 0.01);
     object-fit: cover;
+}
+
+#del-acc, #del-acc-confirm{
+    margin-top: 10px;
+    width: fit-content;
+    background-color: #30363D;
+    padding: 8px;
+    color: #f85149;
+    cursor: pointer;
+    border-radius: 4px;
+    border: 1px solid #373b42;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: block;
+}
+
+#del-acc:hover, #del-acc-confirm:hover{
+    background-color: #f63f4b;
+    border-color: #f85149;
+    color: white;
 }

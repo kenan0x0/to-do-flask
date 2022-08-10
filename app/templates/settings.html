@@ -16,6 +16,11 @@
     <link rel="stylesheet" href="https://kenan0x0.github.io/to-do-flask/app/static/assets/css/jside-skins.css">
 
 
+    <!-- Jquery modal -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+
+
     <!-- Jquery Filer -->
     <script src="https://cdn.jsdelivr.net/npm/jquery.filer@1.3.0/js/jquery.filer.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery.filer@1.3.0/css/jquery.filer.css">
@@ -127,7 +132,21 @@
                 <input type="submit" value="Update Password" id="pswd-btn" disabled>
             </form>
          </fieldset>
+
+         <fieldset id="account-info-block">
+            <legend>Account Control</legend>
+            <i>Please keep in mind that the following action is irreversible and all your information will be lost forever.</i>
+            <a id="del-acc" href="#del-acc-modal" rel="modal:open">Delete Account</a>
+         </fieldset>
         </div>
+    </div>
+
+    <div id="del-acc-modal" class="modal">
+        <h3>Are you sure</h3>
+        <hr>
+        <p>By confirming this action, you understand that your account will be deleted forever and all you information will be lost with it.</p>
+        <i>If you wish to proceed, click the confirmation button below!</i>
+        <a id="del-acc-confirm" href="/del-account/{{user.id}}">Confirm</a>
     </div>
 
 
