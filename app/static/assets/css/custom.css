@@ -81,6 +81,10 @@ input[type=submit]:hover, input[type=button]:hover{
     margin-top: 70px;
 }
 
+#calendar{
+    clear: both;
+}
+
 textarea{
     width: 100%;
     height: 120px;
