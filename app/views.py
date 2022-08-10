@@ -176,13 +176,14 @@ def settings():
     user_name = Users.query.filter_by(email=current_user.email).first().user
     prof_pic = Users.query.filter_by(email=current_user.email).first().user_image
     prof_pic = user_profile_image(db_image=prof_pic, email=current_user.email)
+    user_obj = Users.query.filter_by(email=current_user.email).first()
 
     if not current_user.is_authenticated:
        return redirect(url_for('login'))
 
 
     
-    return render_template('settings.html', msg=msg, cate=cate, user_name=user_name, prof_pic=prof_pic)
+    return render_template('settings.html', msg=msg, cate=cate, user_name=user_name, prof_pic=prof_pic, user=user_obj)
 
 
 @app.route("/handleTasks/<task_id>/<req_type>", methods=['GET', 'POST'])
