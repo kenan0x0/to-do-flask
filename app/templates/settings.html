@@ -71,7 +71,8 @@
         <hr>
         <fieldset id="personal-info-block">
             <legend>Personal Information</legend>
-            <form id="personal-info-form" method="post">
+            <form id="personal-info-form" method="post" enctype=multipart/form-data>
+                <input type="hidden" name="action" value="per">
                 <label for="username">
                     Username
                     {% if user.user %}
@@ -84,7 +85,7 @@
                 <label for="full_name">
                     Full Name
                     {% if user.full_name %}
-                        {% set fullname_val = user.user %}
+                        {% set fullname_val = user.full_name %}
                     {% else %}
                         {% set fullname_val = "" %}
                     {% endif %}
@@ -93,7 +94,7 @@
                 <label for="city">
                     City
                     {% if user.city %}
-                        {% set city_val = user.user %}
+                        {% set city_val = user.city %}
                     {% else %}
                         {% set city_val = "" %}
                     {% endif %}
@@ -113,6 +114,7 @@
          <fieldset id="security-info-block">
             <legend>Security Information</legend>
             <form id="security-info-form" method="post">
+                <input type="hidden" name="action" value="pas">
                 <label for="password">
                     Change Password
                     <input class="inputs" type="password" name="password" id="password" onkeyup="passwordMatching();">

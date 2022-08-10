@@ -181,6 +181,41 @@ def settings():
     if not current_user.is_authenticated:
        return redirect(url_for('login'))
 
+    
+    if request.method == "POST":
+        action = request.form.get("action")
+        if action == "pas":
+            pswd = request.form.get("password")
+            pswd_conf = request.form.get("confirm-password")
+            if pswd == pswd_conf:
+                pw_hash = bc.generate_password_hash(pswd)
+                user_obj.password = pw_hash
+                db.session.commit()
+        else:
+            usrname = request.form.get("username")
+            full_name = request.form.get("full_name")
+            city = request.form.get("city")
+            
+            image_content = None
+            profile_img = request.files.get("setting-profile-image")
+            if profile_img.filename:
+                image_content = f"data:{profile_img.content_type};charset=utf-8;base64,{base64.b64encode(profile_img.read()).decode('utf-8')}"
+
+            if usrname:
+                exists = Users.query.filter_by(user=usrname).first()
+                if not exists:
+                    user_obj.user = usrname
+            
+            if city:
+                user_obj.city = city
+
+            if full_name:
+                user_obj.full_name = full_name
+
+            if image_content:
+                user_obj.user_image = image_content
+
+            db.session.commit()
 
     
     return render_template('settings.html', msg=msg, cate=cate, user_name=user_name, prof_pic=prof_pic, user=user_obj)
