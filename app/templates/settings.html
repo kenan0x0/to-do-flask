@@ -144,8 +144,10 @@
     <div id="del-acc-modal" class="modal">
         <h3>Are you sure</h3>
         <hr>
-        <p>By confirming this action, you understand that your account will be deleted forever and all you information will be lost with it.</p>
-        <i>If you wish to proceed, click the confirmation button below!</i>
+        <div id="conf-msg">
+            <p>By confirming this action, you understand that your account will be deleted forever and all you information will be lost with it.</p>
+            <p>If you wish to proceed, click the confirmation button below!</p>
+        </div>
         <a id="del-acc-confirm" href="/del-account/{{user.id}}">Confirm</a>
     </div>
 

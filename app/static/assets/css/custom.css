@@ -385,3 +385,13 @@ textarea{
     border-color: #f85149;
     color: white;
 }
+
+#conf-msg{
+    margin-top: 10px;
+    padding: 10px;
+    background-color: rgba(207, 34, 46, 0.4);
+    border-top: 1px solid rgb(207, 34, 46);
+    border-bottom: 1px solid rgb(207, 34, 46);
+    color: #2a2d30;
+    text-align: justify;
+}
