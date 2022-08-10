@@ -305,3 +305,59 @@ textarea{
     align-items: center;
     gap: 5px;
 }
+
+/* Settings styles */
+#personal-info-block, #security-info-block{
+    margin-top: 25px;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #ebeced;
+    border: 3px solid black;
+    box-shadow: 10px 10px 1px black;
+}
+
+#security-info-block{
+    margin-top: 35px;
+}
+
+#personal-info-block legend, #security-info-block legend{
+    font-weight: bold;
+    background-color: #232629;
+    color: white;
+    padding: 6px;
+    border-radius: 4px;
+}
+
+.inputs{
+    width: 90%;
+    padding: 15px;
+    margin: 5px 0 10px 0;
+    display: block;
+    border: none;
+    background: #ddd;
+    border-radius: 5px;
+    box-shadow: 1px 1px 5px black;
+    transition-duration: 0.4s;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.inputs:focus{
+    background-color: #ddd;
+    outline: none;
+    box-shadow: 3px 3px 2px black;
+}
+
+#profile-img{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+#setting-prof-pic{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.01);
+    object-fit: cover;
+}
