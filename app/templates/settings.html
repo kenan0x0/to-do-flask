@@ -51,9 +51,9 @@
     <nav class="menu-container">
         <ul class="menu-items">
             <li><a href="/"> <i class="material-icons">speed</i>Dashboard</a></li>
-            <li><a href="#"> <i class="material-icons">edit</i>Add Task</a></li>
+            <li><a href="/add-task"> <i class="material-icons">edit</i>Add Task</a></li>
             <li> <a href="/tasks-list">  <i class="material-icons">checklist</i>Tasks List</a></li>
-            <li> <a href="/settings">  <i class="material-icons">settings</i>Settings</a></li>
+            <li> <a href="#">  <i class="material-icons">settings</i>Settings</a></li>
             <li> <a href="/logout">  <i class="material-icons">logout</i>Logout</a></li>
         </ul>
     </nav>
@@ -62,98 +62,21 @@
 
     <!-- Page content goes here -->
     <div class="page-cont">
-        <h3>Add New Task</h3>
-        <form id="add-task-form" method="post">
-            
-            <label class="form_elem" for="task-title">
-                Task Title*
-                <input type="text" name="task-title" id="task-title" required>
-            </label>
-
-            <label class="form_elem" for="task-body">
-                Task Body*
-                <textarea name="task-body" id="task-body" required></textarea>
-            </label>
-
-            <label class="form_elem" for="label">
-                Task Label
-                <select name="label" id="label">
-                    <option data-placeholder="true"></option>
-                    {% for t_c in task_cate %}
-                        <option value="{{t_c}}">{{t_c}}</option>
-                    {% endfor %}
-                </select>
-            </label>
-
-            <label class="form_elem" for="task_date">
-                Task Date
-                <input type="date" name="task_date" id="task_date">
-            </label>
-            <input type="submit" value="Create Task">
-            <small>(*) Required</small>
-            {% if msg is not none %}
-                <div id="err-block">
-                    <small id="err-msg-{{cate}}">{{msg}}</small>
-                </div>
-            {% endif %}
-        </form>
+        <h3>Settings</h3>
+        <hr>
+        
     </div>
-     
-     
+
 
     <script>
-        setTimeout(() => {
-            document.getElementById("err-block").remove();
-        }, 5000);
+        $(function(){
+        $(".menu-container").jSideMenu({
+            jSidePosition: "position-left",
+            jSideSticky: true,
+            jSideSkin: "moonlit",
+             });
+        }); 
     </script>
-
-     <script>
-     $(function(){
-     $(".menu-container").jSideMenu({
-         jSidePosition: "position-left",
-         jSideSticky: true,
-         jSideSkin: "moonlit",
-          });
-     }); 
-     </script>
-
-    <script>
-    const taskSelect = new SlimSelect({
-    select: '#label',
-    placeholder: "Add label to task",
-    showSearch: true,
-    allowDeselect: true,
-    showOptionTooltips: true,
-    addable: function (value) {
-    alreadyExists =  addOrDont(value);
-    if (alreadyExists){
-        return false;
-    }else{
-        return {
-            text: value,
-            value: value
-        }
-    }
-}
-})
-
-function addOrDont(newElm){      
-    allChildren = [];
-    allFound = taskSelect.data.data;
-
-    for(var i = 0; i < allFound.length; i++){
-        optionText = allFound[i].value;
-        if (optionText){
-            allChildren.push(optionText.toLowerCase());
-        }else{}
-    }
-
-    return allChildren.includes(newElm.toLowerCase());
-}
-
-    </script>
-    
-
 
     {% include "footer.html" %}
 </body>
