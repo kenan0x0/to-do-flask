@@ -76,7 +76,7 @@
         <hr>
         <fieldset id="personal-info-block">
             <legend>Personal Information</legend>
-            <form id="personal-info-form" method="post" enctype=multipart/form-data>
+            <form id="personal-info-form" method="post" enctype=multipart/form-data autocomplete="off">
                 <input type="hidden" name="action" value="per">
                 <label for="username">
                     Username
@@ -118,7 +118,7 @@
 
          <fieldset id="security-info-block">
             <legend>Security Information</legend>
-            <form id="security-info-form" method="post">
+            <form id="security-info-form" method="post" autocomplete="off">
                 <input type="hidden" name="action" value="pas">
                 <label for="password">
                     Change Password

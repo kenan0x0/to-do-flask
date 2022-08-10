@@ -133,7 +133,8 @@ def add_task():
         task_title = request.form.get("task-title")
         new_task = request.form.get("task-body")
         label = request.form.get("label")
-        task_date = datetime.strptime(request.form.get("task_date"), '%Y-%m-%d')
+        task_date = datetime.strptime(request.form.get("task_date"), '%Y-%m-%d').date()        
+
         
         if new_task is not None:
             task = Tasks(user_id=user_id, task_title=task_title, task_body=new_task, task_completed=False, task_date=task_date, task_category=label)

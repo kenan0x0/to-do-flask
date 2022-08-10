@@ -16,6 +16,11 @@
     <link rel="stylesheet" href="https://kenan0x0.github.io/to-do-flask/app/static/assets/css/jside-skins.css">
 
 
+    <!-- Date Selector -->
+    <script src="https://kenan0x0.github.io/to-do-flask/app/static/assets/js/mc-calendar.min.js"></script>
+    <link rel="stylesheet" href="https://kenan0x0.github.io/to-do-flask/app/static/assets/css/mc-calendar.min.css">
+
+
     <!-- Slim Select -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.27.1/slimselect.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.27.1/slimselect.min.css" rel="stylesheet"></link>
@@ -63,7 +68,7 @@
     <!-- Page content goes here -->
     <div class="page-cont">
         <h3>Add New Task</h3>
-        <form id="add-task-form" method="post">
+        <form id="add-task-form" method="post" autocomplete="off">
             
             <label class="form_elem" for="task-title">
                 Task Title*
@@ -87,7 +92,7 @@
 
             <label class="form_elem" for="task_date">
                 Task Date
-                <input type="date" name="task_date" id="task_date">
+                <input type="text" name="task_date" id="task_date">
             </label>
             <input type="submit" value="Create Task">
             <small>(*) Required</small>
@@ -99,6 +104,16 @@
         </form>
     </div>
      
+
+
+    <script>
+        const myDatePicker = MCDatepicker.create({ 
+            el: '#task_date',
+            autoClose: true,
+            dateFormat: 'YYYY-MM-DD',
+            closeOnBlur: true
+        })
+    </script>
      
 
     <script>
