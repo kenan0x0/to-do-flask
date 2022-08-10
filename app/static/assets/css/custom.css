@@ -8,7 +8,9 @@ html{
     background: linear-gradient(180deg, rgba(231,229,237,1) 0%, rgba(145,154,157,1) 41%, rgba(28,52,61,1) 100%);
 }
 
-
+*{
+    font-family: 'Ubuntu', sans-serif;
+}
 
 /* Styles for login page */
 #login-form, #register-form{
