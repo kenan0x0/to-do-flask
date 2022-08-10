@@ -223,7 +223,6 @@ def settings():
 
 @app.route("/handleTasks/<task_id>/<req_type>", methods=['GET', 'POST'])
 def handle_tasks(task_id, req_type):
-    # TODO: add some verification
     if req_type == "fk":
         task_obj = Tasks.query.filter_by(id=task_id).first()
         task_obj.task_completed = True
@@ -249,6 +248,15 @@ def handle_tasks(task_id, req_type):
         db.session.commit()
 
     return redirect(url_for("tasks_list"))
+
+
+@app.route("/del-account/<u_id>", methods=['GET', 'POST'])
+def handle_deletions(u_id):
+    Tasks.query.filter_by(user_id=int(u_id)).delete()
+    Users.query.filter_by(id=int(u_id)).delete()
+    db.session.commit()
+
+    return redirect(url_for("logout"))
 
 @app.errorhandler(404)
 def not_found(e):
