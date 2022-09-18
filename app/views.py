@@ -169,6 +169,23 @@ def tasks_list():
     return render_template('tasks-list.html', msg=msg, cate=cate, user_tasks=user_tasks, user_name=user_name, prof_pic=prof_pic)
 
 
+@app.route('/notes', methods=['GET', 'POST'])
+def notes():
+    msg = None
+    cate = None
+    user_name = Users.query.filter_by(email=current_user.email).first().user
+    prof_pic = Users.query.filter_by(email=current_user.email).first().user_image
+    prof_pic = user_profile_image(db_image=prof_pic, email=current_user.email)
+
+    if not current_user.is_authenticated:
+       return redirect(url_for('login'))
+
+
+    user_id = Users.query.filter_by(email=current_user.email).first().id
+    user_tasks = Tasks.query.filter_by(user_id=user_id).all()
+    
+    return render_template('notes.html', msg=msg, cate=cate, user_tasks=user_tasks, user_name=user_name, prof_pic=prof_pic)
+
 
 @app.route('/settings', methods=['GET', 'POST'])
 def settings():

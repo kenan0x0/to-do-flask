@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='assets/img/favicon.ico') }}">
+
+    <!-- Navbar -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://kenan0x0.github.io/to-do-flask/app/static/assets/js/jquery.jside.menu.js"></script>
+    <link rel="stylesheet" href="https://kenan0x0.github.io/to-do-flask/app/static/assets/css/jside-menu.css">
+    <link rel="stylesheet" href="https://kenan0x0.github.io/to-do-flask/app/static/assets/css/jside-skins.css">
+
+
+    <!-- Jquery modal -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+
+
+    <!-- Slim Select -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.27.1/slimselect.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.27.1/slimselect.min.css" rel="stylesheet"></link>
+
+
+    <!-- Global -->
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/css/custom.css') }}">
+    <title>Notes - To Do List</title>
+</head>
+<body>
+
+    <menu class="menubar">
+        <menuitem>
+           <button class="menu-trigger"> <i class="material-icons">menu</i> </button>
+        </menuitem>
+    </menu>
+    <div class="menu-body visibility">
+    <div class="menu-head">
+        <span class="layer">
+            <div class="col">
+                <div class="row for-pic">
+                <div class="profile-pic">     
+                    <img src="{{prof_pic}}" alt="Profile Image" /> 
+                </div>
+                </div>
+                <div class="row for-name">
+                <h3 title="Username">{{user_name}}</h3>
+                <span class="tagline">User</span>
+                </div>
+            </div>
+        </span>
+    </div>
+    <nav class="menu-container">
+        <ul class="menu-items">
+            <li><a href="/"> <i class="material-icons">speed</i>Dashboard</a></li>
+            <li><a href="/add-task"> <i class="material-icons">edit</i>Add Task</a></li>
+            <li> <a href="/tasks-list">  <i class="material-icons">checklist</i>Tasks List</a></li>
+            <li> <a href="/#">  <i class="material-icons">note_add</i>Notes</a></li>
+            <li> <a href="/settings">  <i class="material-icons">settings</i>Settings</a></li>
+            <li> <a href="/logout">  <i class="material-icons">logout</i>Logout</a></li>
+        </ul>
+    </nav>
+    </div>
+
+
+    <!-- Page content goes here -->
+    <div class="page-cont">
+        <h3>Notes</h3>
+        
+    </div>
+
+     <script>
+     $(function(){
+     $(".menu-container").jSideMenu({
+         jSidePosition: "position-left",
+         jSideSticky: true,
+         jSideSkin: "moonlit",
+          });
+     }); 
+     </script>
+
+    {% include "footer.html" %}
+</body>
+</html>
