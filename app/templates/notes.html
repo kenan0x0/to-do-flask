@@ -28,7 +28,8 @@
 
 
     <!-- Color Picker -->
-    
+    <link rel="stylesheet" href="https://kenan0x0.github.io/to-do-flask/app/static/assets/css/jquery.minicolors.css">
+    <script src="https://kenan0x0.github.io/to-do-flask/app/static/assets/js/jquery.minicolors.js"></script>
 
     <!-- Global -->
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/css/custom.css') }}">
@@ -94,9 +95,29 @@
         <form class="note-form" method="post">
             <input type="text" name="note-title" class="note-item" placeholder="Note Title">
             <textarea name="note-body" class="note-item" placeholder="Note Body"></textarea>
+            <input type="text" data-control="hue" class="note-color" name="note-color">
         </form>
         <a href="" class="note-btn">Create</a>
     </div>
+
+    <script>
+        $('.note-color').minicolors({
+            animationSpeed: 50,
+            animationEasing: 'swing',
+            changeDelay: 0,
+            control: 'hue',
+            defaultValue: 'fdfd80',
+            format: 'hex',
+            showSpeed: 500,
+            hideSpeed: 500,
+            inline: false,
+            keywords: '',
+            letterCase: 'lowercase',
+            opacity: false,
+            position: 'bottom left',
+            swatches: ["0088cc", "26890d", "ff6600", "ff6161", "ff99ee", "00ffff", "fdfd80"]
+        });
+    </script>
 
      <script>
      $(function(){

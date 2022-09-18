@@ -432,8 +432,9 @@ textarea{
     display: flex;
     flex-direction: column;
     border-radius: 10px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%;
 }
 
 .note-btn{
