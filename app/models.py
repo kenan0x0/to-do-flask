@@ -31,3 +31,10 @@ class Tasks(db.Model, UserMixin):
     task_completed = db.Column(db.Boolean, default=False, unique=False, nullable=False)
     task_category = db.Column(db.String, unique=False, nullable=False)
     task_date = db.Column(db.Date, unique=False, nullable=True)
+
+class Notes(db.Model, UserMixin):
+    __tablename__ = 'Notes'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer(), db.ForeignKey("Users.id"), unique=False, nullable=False)
+    note_title = db.Column(db.String(100))
+    note_body = db.Column(db.String(500))

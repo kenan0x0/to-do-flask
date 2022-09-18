@@ -27,6 +27,9 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.27.1/slimselect.min.css" rel="stylesheet"></link>
 
 
+    <!-- Color Picker -->
+    
+
     <!-- Global -->
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/css/custom.css') }}">
     <title>Notes - To Do List</title>
@@ -70,7 +73,29 @@
     <!-- Page content goes here -->
     <div class="page-cont">
         <h3>Notes</h3>
-        
+        <div id="note-container">
+            <a href="#note-popup" rel="modal:open" style="text-decoration: none;">
+                <div id="add-note">
+                    <i class="material-icons">add</i>
+                    <p>Add Note</p>
+                </div>
+            </a>
+            {% if notes|length == 0 %}
+                <p id="empty-msg">No notes created. Add one.</p>
+            {% else %}
+
+                {% endif %}
+        </div>
+    </div>
+
+
+    <div class="modal" id="note-popup">
+        <h3>Add Note</h3>
+        <form class="note-form" method="post">
+            <input type="text" name="note-title" class="note-item" placeholder="Note Title">
+            <textarea name="note-body" class="note-item" placeholder="Note Body"></textarea>
+        </form>
+        <a href="" class="note-btn">Create</a>
     </div>
 
      <script>

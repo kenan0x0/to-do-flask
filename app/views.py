@@ -5,7 +5,7 @@ from werkzeug.exceptions import HTTPException, NotFound, abort
 from jinja2 import TemplateNotFound
 
 from app import app, lm, db, bc
-from app.models import Users, Tasks
+from app.models import Users, Tasks, Notes
 
 from datetime import datetime
 import base64
@@ -182,9 +182,9 @@ def notes():
 
 
     user_id = Users.query.filter_by(email=current_user.email).first().id
-    user_tasks = Tasks.query.filter_by(user_id=user_id).all()
+    user_notes = Notes.query.filter_by(user_id=user_id).all()
     
-    return render_template('notes.html', msg=msg, cate=cate, user_tasks=user_tasks, user_name=user_name, prof_pic=prof_pic)
+    return render_template('notes.html', msg=msg, cate=cate, user_name=user_name, prof_pic=prof_pic, notes=user_notes)
 
 
 @app.route('/settings', methods=['GET', 'POST'])

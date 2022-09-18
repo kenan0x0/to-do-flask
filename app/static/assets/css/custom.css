@@ -397,3 +397,49 @@ textarea{
     color: #2a2d30;
     text-align: justify;
 }
+
+#note-container{
+    margin-top: 15px;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #ebeced;
+    border: 3px solid black;
+    box-shadow: 10px 10px 1px black;
+}
+
+#add-note{
+    width: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-color: #26890d;
+    padding: 5px;
+    border-radius: 25px;
+    padding-right: 10px;
+    cursor: pointer;
+}
+
+#add-note:hover {
+    transform: scale(1.04);
+  }
+
+#empty-msg{
+    text-align: center;
+}
+
+.note-form{
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.note-btn{
+    text-decoration: none;
+    background-color: #26890d;
+    color: white;
+    padding: 15px;
+    border-radius: 15px
+}
