@@ -38,3 +38,4 @@ class Notes(db.Model, UserMixin):
     user_id = db.Column(db.Integer(), db.ForeignKey("Users.id"), unique=False, nullable=False)
     note_title = db.Column(db.String(100))
     note_body = db.Column(db.String(500))
+    note_color_hex = db.Column(db.String(20))

@@ -92,10 +92,20 @@
 
     <div class="modal" id="note-popup">
         <h3>Add Note</h3>
+        <hr id="upper-hr">
         <form class="note-form" method="post">
-            <input type="text" name="note-title" class="note-item" placeholder="Note Title">
-            <textarea name="note-body" class="note-item" placeholder="Note Body"></textarea>
-            <input type="text" data-control="hue" class="note-color" name="note-color">
+            <label for="note-title">
+                Note Title
+                <input type="text" name="note-title" id="note-title" class="note-item" style="height: 30px;">
+            </label>
+            <label for="note-body">
+                Note Body
+                <textarea name="note-body" id="note-body" class="note-item"></textarea>
+            </label>
+            <label for="note-color">
+                Note Color
+                <input type="text" data-control="hue" class="note-color" name="note-color" id="note-color">
+            </label>
         </form>
         <a href="" class="note-btn">Create</a>
     </div>
