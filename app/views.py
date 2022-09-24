@@ -100,6 +100,7 @@ def index():
     prof_pic = user_profile_image(db_image=prof_pic, email=current_user.email)
     user_id = Users.query.filter_by(email=current_user.email).first().id
     user_tasks = Tasks.query.filter_by(user_id=user_id).all()
+    user_notes = len(Notes.query.filter_by(user_id=user_id).all())
 
 
     tasks_finished = 0
@@ -113,7 +114,7 @@ def index():
 
     calendar_tasks = [[task.task_date.strftime("%m/%d/%Y").replace("/","-"), task.task_title, task.task_body, task.id] for task in user_tasks]
     
-    return render_template('index.html', user_name=user_name, calendar_tasks=calendar_tasks, prof_pic=prof_pic, tasks_total=tasks_total, tasks_finished=tasks_finished, tasks_ongoing=tasks_ongoing, account_creation=account_creation)
+    return render_template('index.html', user_name=user_name, calendar_tasks=calendar_tasks, prof_pic=prof_pic, tasks_total=tasks_total, tasks_finished=tasks_finished, tasks_ongoing=tasks_ongoing, account_creation=account_creation, user_notes=user_notes)
 
 @app.route('/add-task', methods=['GET', 'POST'])
 def add_task():
