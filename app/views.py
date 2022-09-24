@@ -287,6 +287,12 @@ def handle_deletions(u_id):
 
     return redirect(url_for("logout"))
 
+@app.route("/del-note/<note_id>", methods=['GET', 'POST'])
+def handle_note_deletions(note_id):
+    Notes.query.filter_by(id=int(note_id)).delete()
+    db.session.commit()
+    return redirect(url_for("notes"))
+
 @app.errorhandler(404)
 def not_found(e):
   return redirect(url_for("index"))
