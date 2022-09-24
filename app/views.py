@@ -183,6 +183,16 @@ def notes():
 
     user_id = Users.query.filter_by(email=current_user.email).first().id
     user_notes = Notes.query.filter_by(user_id=user_id).all()
+
+    if request.method == "POST":
+        note_title = request.form.get("note-title")
+        note_body = request.form.get("note-body")
+        note_color = request.form.get("note-color")
+        
+        created_note = Notes(user_id=user_id, note_title=note_title, note_body=note_body, note_color_hex=note_color)
+        db.session.add(created_note)
+        db.session.commit()
+        return redirect(request.referrer)
     
     return render_template('notes.html', msg=msg, cate=cate, user_name=user_name, prof_pic=prof_pic, notes=user_notes)
 
@@ -270,6 +280,7 @@ def handle_tasks(task_id, req_type):
 
 @app.route("/del-account/<u_id>", methods=['GET', 'POST'])
 def handle_deletions(u_id):
+    Notes.query.filter_by(user_id=int(u_id)).delete()
     Tasks.query.filter_by(user_id=int(u_id)).delete()
     Users.query.filter_by(id=int(u_id)).delete()
     db.session.commit()
