@@ -226,12 +226,13 @@ textarea{
 
 /* Footer styles */
 .pages-footer{
-    position: absolute;
-    right: 0;
-    left: 0;
-    bottom: 0;
     background-color: #232629;
-    padding: 15px;
+    padding: 10px;
+    position: absolute;
+    bottom: 10px;
+    right: 0;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
 }
 
 .footer-content{
