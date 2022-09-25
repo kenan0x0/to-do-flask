@@ -30,6 +30,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.27.1/slimselect.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.27.1/slimselect.min.css" rel="stylesheet"></link>
 
+    <!-- Segment -->
+    <link rel="stylesheet" href="https://kenan0x0.github.io/to-do-flask/app/static/assets/css/segment.css">
+    <script src="https://kenan0x0.github.io/to-do-flask/app/static/assets/js/segment.js"></script>
 
     <!-- Global -->
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/css/custom.css') }}">
@@ -134,6 +137,39 @@
             </form>
          </fieldset>
 
+         <fieldset id="privacy-block">
+            <legend>Privacy</legend>
+            <form id="privacy-form" method="post">
+                <input type="hidden" name="action" value="privacy">
+                
+                <div class="setting-item">
+                    <p class="setting-header">Make account discoverable</p>
+                    <select name="acc-toggle" class="acc-toggle">
+                        <option value="no">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </div>
+
+                <div class="setting-item">
+                    <p class="setting-header">Allow friends to see my todos</p>
+                    <select name="todos-toggle" class="todos-toggle">
+                        <option value="no">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </div>
+
+                <div class="setting-item">
+                    <p class="setting-header">Allow friends to see my notes</p>
+                    <select name="notes-toggle" class="notes-toggle">
+                        <option value="no">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </div>
+
+                <input type="submit" value="Change Privacy Settings">
+            </form>
+         </fieldset>
+
          <fieldset id="account-info-block">
             <legend>Account Control</legend>
             <i>Please keep in mind that the following action is irreversible and all your information will be lost forever.</i>
@@ -152,6 +188,12 @@
         <a id="del-acc-confirm" href="/del-account/{{user.id}}">Confirm</a>
     </div>
 
+
+    <script>
+        $(".acc-toggle").Segment();
+        $(".notes-toggle").Segment();
+        $(".todos-toggle").Segment();
+    </script>
 
     <script>
         $(function(){

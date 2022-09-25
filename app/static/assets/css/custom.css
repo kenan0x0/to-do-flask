@@ -309,7 +309,7 @@ textarea{
 }
 
 /* Settings styles */
-#personal-info-block, #security-info-block, #account-info-block{
+#personal-info-block, #security-info-block, #account-info-block, #privacy-block{
     margin-top: 25px;
     border-radius: 5px;
     padding: 10px;
@@ -326,7 +326,7 @@ textarea{
     margin-top: 35px;
 }
 
-#personal-info-block legend, #security-info-block legend, #account-info-block legend{
+#personal-info-block legend, #security-info-block legend, #account-info-block legend, #privacy-block legend{
     font-weight: bold;
     background-color: #232629;
     color: white;
@@ -497,4 +497,20 @@ textarea{
 
 .panel-elem:hover{
     color: black;
+}
+
+.setting-item{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px;
+    border: 1px solid rgb(23, 44, 52);
+    margin-bottom: 4px;
+    border-radius: 4px;
+}
+
+.setting-header{
+    background-color: rgb(23, 44, 52);
+    color: white;
+    padding: 5px;
 }
