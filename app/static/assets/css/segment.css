@@ -4,6 +4,7 @@
 	border-radius: 4px;
 	display:inline-block;
 	font-family: 'Lato',Georgia, Serif;
+	width: max-content;
 }
 .ui-segment span.option.active{
 	background-color: rgb(0, 122, 255);
