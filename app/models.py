@@ -12,6 +12,9 @@ class Users(db.Model, UserMixin):
     gender = db.Column(db.String(), unique=False, nullable=True, default=None)
     full_name = db.Column(db.String(), unique=False, nullable=True, default=None)
     city = db.Column(db.String(), unique=False, nullable=True, default=None)
+    todos_privacy = db.Column(db.Boolean, unique=False, nullable=False, default=False)
+    notes_privacy = db.Column(db.Boolean, unique=False, nullable=False, default=False)
+    acc_privacy = db.Column(db.Boolean, unique=False, nullable=False, default=False)
 
     def __init__(self, user, email, password, user_image, creation_time):
         self.user = user
