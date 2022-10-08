@@ -14,7 +14,7 @@ class Users(db.Model, UserMixin):
     city = db.Column(db.String(), unique=False, nullable=True, default=None)
     todos_privacy = db.Column(db.Boolean, unique=False, nullable=False, default=False)
     notes_privacy = db.Column(db.Boolean, unique=False, nullable=False, default=False)
-    acc_privacy = db.Column(db.Boolean, unique=False, nullable=False, default=False)
+    acc_privacy = db.Column(db.Boolean, unique=False, nullable=False, default=True)
 
     def __init__(self, user, email, password, user_image, creation_time):
         self.user = user
@@ -42,3 +42,10 @@ class Notes(db.Model, UserMixin):
     note_title = db.Column(db.String(100))
     note_body = db.Column(db.String(500))
     note_color_hex = db.Column(db.String(20))
+
+class Friends(db.Model, UserMixin):
+    __tablename__ = 'Friends'
+    id = db.Column(db.Integer, primary_key=True)
+    user_1 = db.Column(db.Integer, unique=False, nullable=False)
+    user_2 = db.Column(db.Integer, unique=False, nullable=False)
+    friends_since = db.Column(db.Date, unique=False, nullable=False)

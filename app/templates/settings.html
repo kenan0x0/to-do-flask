@@ -67,6 +67,7 @@
             <li><a href="/add-task"> <i class="material-icons">edit</i>Add Task</a></li>
             <li> <a href="/tasks-list">  <i class="material-icons">checklist</i>Tasks List</a></li>
             <li> <a href="/notes">  <i class="material-icons">note_add</i>Notes</a></li>
+            <li> <a href="/friends">  <i class="material-icons">group</i>People</a></li>
             <li> <a href="#">  <i class="material-icons">settings</i>Settings</a></li>
             <li> <a href="/logout">  <i class="material-icons">logout</i>Logout</a></li>
         </ul>
@@ -146,7 +147,11 @@
                     <p class="setting-header">Make account discoverable</p>
                     <select name="acc-toggle" class="acc-toggle">
                         <option value="no">No</option>
-                        <option value="yes">Yes</option>
+                        {% if account_discoverable %}
+                            <option value="yes" selected>Yes</option>
+                        {% else %}
+                            <option value="yes">Yes</option>
+                        {% endif %}
                     </select>
                 </div>
 
@@ -154,7 +159,11 @@
                     <p class="setting-header">Allow friends to see my todos</p>
                     <select name="todos-toggle" class="todos-toggle">
                         <option value="no">No</option>
-                        <option value="yes">Yes</option>
+                        {% if todos_discoverable %}
+                            <option value="yes" selected>Yes</option>
+                        {% else %}
+                            <option value="yes">Yes</option>
+                        {% endif %}
                     </select>
                 </div>
 
@@ -162,7 +171,11 @@
                     <p class="setting-header">Allow friends to see my notes</p>
                     <select name="notes-toggle" class="notes-toggle">
                         <option value="no">No</option>
-                        <option value="yes">Yes</option>
+                        {% if notes_discoverable %}
+                            <option value="yes" selected>Yes</option>
+                        {% else %}
+                            <option value="yes">Yes</option>
+                        {% endif %}
                     </select>
                 </div>
 

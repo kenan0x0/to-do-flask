@@ -5,7 +5,7 @@ from werkzeug.exceptions import HTTPException, NotFound, abort
 from jinja2 import TemplateNotFound
 
 from app import app, lm, db, bc
-from app.models import Users, Tasks, Notes
+from app.models import Users, Tasks, Notes, Friends
 
 from datetime import datetime
 import base64
@@ -210,6 +210,9 @@ def settings():
     if not current_user.is_authenticated:
        return redirect(url_for('login'))
 
+    account_discoverable = user_obj.acc_privacy
+    todos_discoverable = user_obj.todos_privacy
+    notes_discoverable = user_obj.notes_privacy
     
     if request.method == "POST":
         action = request.form.get("action")
@@ -220,6 +223,17 @@ def settings():
                 pw_hash = bc.generate_password_hash(pswd)
                 user_obj.password = pw_hash
                 db.session.commit()
+        
+        elif action == "privacy":
+            acc_toggle = True if request.form.get("acc-toggle") == "yes" else False
+            todos_toggle = True if request.form.get("todos-toggle") == "yes" else False
+            notes_toggle = True if request.form.get("notes-toggle") == "yes" else False
+            
+            user_obj.todos_privacy = todos_toggle
+            user_obj.notes_privacy = notes_toggle
+            user_obj.acc_privacy = acc_toggle
+            db.session.commit()
+
         else:
             usrname = request.form.get("username")
             full_name = request.form.get("full_name")
@@ -246,9 +260,82 @@ def settings():
 
             db.session.commit()
 
-    
-    return render_template('settings.html', msg=msg, cate=cate, user_name=user_name, prof_pic=prof_pic, user=user_obj)
+    return render_template('settings.html', msg=msg, cate=cate, user_name=user_name, prof_pic=prof_pic, user=user_obj, notes_discoverable=notes_discoverable, account_discoverable=account_discoverable, todos_discoverable=todos_discoverable)
 
+
+@app.route("/friends", methods=['GET', 'POST'])
+def friends():
+    msg = None
+    cate = None
+    user_name = Users.query.filter_by(email=current_user.email).first().user
+    prof_pic = Users.query.filter_by(email=current_user.email).first().user_image
+    prof_pic = user_profile_image(db_image=prof_pic, email=current_user.email)
+
+    if not current_user.is_authenticated:
+       return redirect(url_for('login'))
+
+    user_id = Users.query.filter_by(email=current_user.email).first().id
+
+    friends_query_1 = Friends.query.filter_by(user_1=user_id).all()
+    friends_query_2 = Friends.query.filter_by(user_2=user_id).all()
+    friends_query = friends_query_1 + friends_query_2
+    friends_list = []
+    for friend in friends_query:
+        friend_id = None
+        if friend.user_1 == user_id:
+            friend_id = friend.user_2
+        else:
+            friend_id = friend.user_1
+
+        friend_item = [Users.query.filter_by(id=friend_id).first(), friend.friends_since, friend.id]
+
+        friends_list.append(friend_item)
+    
+    for person in friends_list:
+        person[0].user_image = user_profile_image(db_image=person[0].user_image, email=person[0].email)
+
+
+    if request.method == "POST":
+        action = request.form.get("action")
+
+        if action == "search":
+            search_term = request.form.get("search-term")
+            search_term = "%{}%".format(search_term)
+            query_1 = Users.query.filter(Users.user.like(search_term)).all()
+            query_2 = Users.query.filter(Users.email.like(search_term)).all()
+            search_results = query_1 + query_2
+            search_results = list(dict.fromkeys(search_results))
+            for person in search_results:
+                person.user_image = user_profile_image(db_image=person.user_image, email=person.email)
+
+            # Remove yourself
+            for person in search_results:
+                if person.id == user_id:
+                    search_results.remove(person)
+                    break
+            return render_template("friends.html", msg=msg, cate=cate, user_name=user_name, prof_pic=prof_pic, search_results=search_results, friends_list=friends_list)
+
+    return render_template("friends.html", msg=msg, cate=cate, user_name=user_name, prof_pic=prof_pic, friends_list=friends_list)
+
+# Add friends handler
+@app.route("/add-friend/<friend_id>", methods=['GET', 'POST'])
+def add_friend(friend_id):
+    user_id = Users.query.filter_by(email=current_user.email).first().id
+    add_date = datetime.today().date()
+
+    friend_relation = Friends(user_1=user_id, user_2=friend_id, friends_since=add_date)
+    db.session.add(friend_relation)
+    db.session.commit()
+
+    return redirect(url_for("friends"))
+
+# Delete friends handler
+@app.route("/del-friend/<friend_relation_id>", methods=['GET', 'POST'])
+def del_friend(friend_relation_id):
+    friendship_obj = Friends.query.filter_by(id=friend_relation_id).delete()
+    db.session.commit()
+
+    return redirect(url_for("friends"))
 
 @app.route("/handleTasks/<task_id>/<req_type>", methods=['GET', 'POST'])
 def handle_tasks(task_id, req_type):
