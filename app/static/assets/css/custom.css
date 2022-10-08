@@ -638,3 +638,44 @@ textarea{
     align-items: center;
     justify-content: center;
 }
+
+
+
+#notification-menu {
+    background: #232629;
+    position: fixed;
+    width: 250px;
+    transition: all 600ms ease 0s;
+    height: 100%;
+    top: 48px;
+    right: -310px;
+    padding: 30px;
+}
+
+#notification-menu ul {
+    margin: 16px 0;
+    padding: 0;
+    color: white;
+    list-style: none;
+}
+
+#notification-menu ul li {
+    margin: 16px 0;
+    transition: all 0.25s ease-in-out;
+}
+
+#notification-menu ul li:hover {
+    color: #bdc3c7;
+    cursor: pointer;
+}
+
+#notification-menu.active {
+    right: 0px;
+    transition: all 0.75s ease-in-out;
+}
+
+.noti-item{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}

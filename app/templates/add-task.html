@@ -31,12 +31,23 @@
     <title>Add Task - To Do List</title>
 </head>
 <body>
-    <div class="notification-wrapper">
+    <div class="notification-wrapper" id="trigger">
         <i class="material-icons">notifications</i></a>
         {% if notifications|length > 0 %}
             <p title="{{notifications|length}} notification(s)" class="notification-count"><span>{{notifications|length}}</span></p>
         {% endif %}
     </div>
+
+    {% if notifications|length > 0 %}
+        <div id="notification-menu">
+            <ul>
+                {% for noti in notifications %}
+                    <li><div class="noti-item"><p>{{noti.notification}}</p><i class="material-icons" onclick="location.href = '/delete-notification/{{noti.id}}'">clear</i></div></li>
+                    <hr>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
 
     <menu class="menubar">
         <menuitem>
@@ -174,6 +185,16 @@ function addOrDont(newElm){
     return allChildren.includes(newElm.toLowerCase());
 }
 
+    </script>
+
+    <script>
+        $("#trigger").click(function() {
+            $("#notification-menu").toggleClass("active");
+        });
+
+        $("#trigger").click(function() {
+            $("#trigger").toggleClass("active");
+        });
     </script>
     
 
