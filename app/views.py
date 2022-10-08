@@ -388,6 +388,8 @@ def handle_tasks(task_id, req_type):
 
 @app.route("/del-account/<u_id>", methods=['GET', 'POST'])
 def handle_deletions(u_id):
+    Friends.query.filter_by(user_1=int(u_id)).delete()
+    Friends.query.filter_by(user_2=int(u_id)).delete()
     Notes.query.filter_by(user_id=int(u_id)).delete()
     Tasks.query.filter_by(user_id=int(u_id)).delete()
     Users.query.filter_by(id=int(u_id)).delete()
