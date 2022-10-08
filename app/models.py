@@ -55,3 +55,4 @@ class Notifications(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer(), db.ForeignKey("Users.id"), unique=False, nullable=False)
     notification = db.Column(db.String(500), unique=False, nullable=False)
+    notification_date = db.Column(db.DateTime, unique=False, nullable=False)

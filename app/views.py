@@ -7,7 +7,7 @@ from jinja2 import TemplateNotFound
 from app import app, lm, db, bc
 from app.models import Users, Tasks, Notes, Friends, Notifications
 
-from datetime import datetime
+from datetime import datetime, timedelta
 import base64
 import hashlib
 
@@ -357,7 +357,8 @@ def add_friend(friend_id):
     db.session.commit()
 
     notification_body = f"User {initiator} has added you to their friends list!"
-    notification_obj = Notifications(user_id=friend_id, notification=notification_body)
+    notification_date = datetime.now().replace(microsecond=0) + timedelta(hours=2)
+    notification_obj = Notifications(user_id=friend_id, notification=notification_body, notification_date=notification_date)
     db.session.add(notification_obj)
     db.session.commit()
 
