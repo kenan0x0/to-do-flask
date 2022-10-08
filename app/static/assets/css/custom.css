@@ -613,3 +613,28 @@ textarea{
     padding: 2px;
     border-radius: 3px;
 }
+
+.notification-wrapper{
+    position: absolute;
+    z-index: 10;
+    top: 12px;
+    right: 15px;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    align-items: flex-end;
+    cursor: pointer;
+}
+
+.notification-count{
+    background-color: rgb(216, 59, 1);
+    border: 1px solid rgb(255, 147, 73);
+    padding: 3px;
+    border-radius: 50%;
+    height: 12px;
+    width: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

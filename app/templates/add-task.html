@@ -31,6 +31,12 @@
     <title>Add Task - To Do List</title>
 </head>
 <body>
+    <div class="notification-wrapper">
+        <i class="material-icons">notifications</i></a>
+        {% if notifications|length > 0 %}
+            <p title="{{notifications|length}} notification(s)" class="notification-count"><span>{{notifications|length}}</span></p>
+        {% endif %}
+    </div>
 
     <menu class="menubar">
         <menuitem>

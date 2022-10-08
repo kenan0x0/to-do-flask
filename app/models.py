@@ -49,3 +49,9 @@ class Friends(db.Model, UserMixin):
     user_1 = db.Column(db.Integer, unique=False, nullable=False)
     user_2 = db.Column(db.Integer, unique=False, nullable=False)
     friends_since = db.Column(db.Date, unique=False, nullable=False)
+
+class Notifications(db.Model, UserMixin):
+    __tablename__ = 'Notifications'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer(), db.ForeignKey("Users.id"), unique=False, nullable=False)
+    notification = db.Column(db.String(500), unique=False, nullable=False)

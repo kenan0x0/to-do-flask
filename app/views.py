@@ -5,7 +5,7 @@ from werkzeug.exceptions import HTTPException, NotFound, abort
 from jinja2 import TemplateNotFound
 
 from app import app, lm, db, bc
-from app.models import Users, Tasks, Notes, Friends
+from app.models import Users, Tasks, Notes, Friends, Notifications
 
 from datetime import datetime
 import base64
@@ -101,6 +101,7 @@ def index():
     user_id = Users.query.filter_by(email=current_user.email).first().id
     user_tasks = Tasks.query.filter_by(user_id=user_id).all()
     user_notes = len(Notes.query.filter_by(user_id=user_id).all())
+    notifications = Notifications.query.filter_by(user_id=user_id).all()
 
 
     tasks_finished = 0
@@ -114,7 +115,7 @@ def index():
 
     calendar_tasks = [[task.task_date.strftime("%m/%d/%Y").replace("/","-"), task.task_title, task.task_body, task.id] for task in user_tasks]
     
-    return render_template('index.html', user_name=user_name, calendar_tasks=calendar_tasks, prof_pic=prof_pic, tasks_total=tasks_total, tasks_finished=tasks_finished, tasks_ongoing=tasks_ongoing, account_creation=account_creation, user_notes=user_notes)
+    return render_template('index.html', user_name=user_name, calendar_tasks=calendar_tasks, prof_pic=prof_pic, tasks_total=tasks_total, tasks_finished=tasks_finished, tasks_ongoing=tasks_ongoing, account_creation=account_creation, user_notes=user_notes, notifications=notifications)
 
 @app.route('/add-task', methods=['GET', 'POST'])
 def add_task():
@@ -129,6 +130,7 @@ def add_task():
     prof_pic = Users.query.filter_by(email=current_user.email).first().user_image
     prof_pic = user_profile_image(db_image=prof_pic, email=current_user.email)
     user_task_categories = [task.task_category for task in Tasks.query.filter_by(user_id=user_id).all()]
+    notifications = Notifications.query.filter_by(user_id=user_id).all()
 
     if request.method == "POST":
         task_title = request.form.get("task-title")
@@ -148,7 +150,7 @@ def add_task():
             cate = "error"
 
     
-    return render_template('add-task.html', msg=msg, cate=cate, task_cate=user_task_categories, user_name=user_name, prof_pic=prof_pic)
+    return render_template('add-task.html', msg=msg, cate=cate, task_cate=user_task_categories, user_name=user_name, prof_pic=prof_pic, notifications=notifications)
 
 
 
@@ -166,8 +168,9 @@ def tasks_list():
 
     user_id = Users.query.filter_by(email=current_user.email).first().id
     user_tasks = Tasks.query.filter_by(user_id=user_id).all()
+    notifications = Notifications.query.filter_by(user_id=user_id).all()
     
-    return render_template('tasks-list.html', msg=msg, cate=cate, user_tasks=user_tasks, user_name=user_name, prof_pic=prof_pic)
+    return render_template('tasks-list.html', msg=msg, cate=cate, user_tasks=user_tasks, user_name=user_name, prof_pic=prof_pic, notifications=notifications)
 
 
 @app.route('/notes', methods=['GET', 'POST'])
@@ -184,6 +187,7 @@ def notes():
 
     user_id = Users.query.filter_by(email=current_user.email).first().id
     user_notes = Notes.query.filter_by(user_id=user_id).all()
+    notifications = Notifications.query.filter_by(user_id=user_id).all()
 
     if request.method == "POST":
         note_title = request.form.get("note-title")
@@ -195,7 +199,7 @@ def notes():
         db.session.commit()
         return redirect(request.referrer)
     
-    return render_template('notes.html', msg=msg, cate=cate, user_name=user_name, prof_pic=prof_pic, notes=user_notes)
+    return render_template('notes.html', msg=msg, cate=cate, user_name=user_name, prof_pic=prof_pic, notes=user_notes, notifications=notifications)
 
 
 @app.route('/settings', methods=['GET', 'POST'])
@@ -206,6 +210,8 @@ def settings():
     prof_pic = Users.query.filter_by(email=current_user.email).first().user_image
     prof_pic = user_profile_image(db_image=prof_pic, email=current_user.email)
     user_obj = Users.query.filter_by(email=current_user.email).first()
+    user_id = Users.query.filter_by(email=current_user.email).first().id
+    notifications = Notifications.query.filter_by(user_id=user_id).all()
 
     if not current_user.is_authenticated:
        return redirect(url_for('login'))
@@ -260,7 +266,7 @@ def settings():
 
             db.session.commit()
 
-    return render_template('settings.html', msg=msg, cate=cate, user_name=user_name, prof_pic=prof_pic, user=user_obj, notes_discoverable=notes_discoverable, account_discoverable=account_discoverable, todos_discoverable=todos_discoverable)
+    return render_template('settings.html', msg=msg, cate=cate, user_name=user_name, prof_pic=prof_pic, user=user_obj, notes_discoverable=notes_discoverable, account_discoverable=account_discoverable, todos_discoverable=todos_discoverable, notifications=notifications)
 
 
 @app.route("/friends", methods=['GET', 'POST'])
@@ -279,6 +285,8 @@ def friends():
        return redirect(url_for('login'))
 
     user_id = Users.query.filter_by(email=current_user.email).first().id
+
+    notifications = Notifications.query.filter_by(user_id=user_id).all()
 
     friends_query_1 = Friends.query.filter_by(user_1=user_id).all()
     friends_query_2 = Friends.query.filter_by(user_2=user_id).all()
@@ -333,18 +341,24 @@ def friends():
                 if person not in checker_list:
                     final_results.append(person)
             
-            return render_template("friends.html", msg=msg, cate=cate, user_name=user_name, prof_pic=prof_pic, final_results=final_results, friends_list=friends_list, friend_count=friend_count)
+            return render_template("friends.html", msg=msg, cate=cate, user_name=user_name, prof_pic=prof_pic, final_results=final_results, friends_list=friends_list, friend_count=friend_count, notifications=notifications)
 
-    return render_template("friends.html", msg=msg, cate=cate, user_name=user_name, prof_pic=prof_pic, friends_list=friends_list, friend_count=friend_count)
+    return render_template("friends.html", msg=msg, cate=cate, user_name=user_name, prof_pic=prof_pic, friends_list=friends_list, friend_count=friend_count, notifications=notifications)
 
 # Add friends handler
 @app.route("/add-friend/<friend_id>", methods=['GET', 'POST'])
 def add_friend(friend_id):
     user_id = Users.query.filter_by(email=current_user.email).first().id
+    initiator = Users.query.filter_by(email=current_user.email).first().user
     add_date = datetime.today().date()
 
     friend_relation = Friends(user_1=user_id, user_2=friend_id, friends_since=add_date)
     db.session.add(friend_relation)
+    db.session.commit()
+
+    notification_body = f"User {initiator} has added you to their friends list!"
+    notification_obj = Notifications(user_id=friend_id, notification=notification_body)
+    db.session.add(notification_obj)
     db.session.commit()
 
     return redirect(url_for("friends"))
