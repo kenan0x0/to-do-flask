@@ -371,6 +371,15 @@ def del_friend(friend_relation_id):
 
     return redirect(url_for("friends"))
 
+
+# Delete notifications handler
+@app.route("/delete-notification/<notification_id>", methods=['GET', 'POST'])
+def del_notification(notification_id):
+    notification_obj = Notifications.query.filter_by(id=notification_id).delete()
+    db.session.commit()
+
+    return redirect(request.referrer)
+
 @app.route("/handleTasks/<task_id>/<req_type>", methods=['GET', 'POST'])
 def handle_tasks(task_id, req_type):
     if req_type == "fk":
