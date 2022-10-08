@@ -271,6 +271,10 @@ def friends():
     prof_pic = Users.query.filter_by(email=current_user.email).first().user_image
     prof_pic = user_profile_image(db_image=prof_pic, email=current_user.email)
 
+
+    # Used to remove exisitng friends from the search results
+    checker_list = []
+
     if not current_user.is_authenticated:
        return redirect(url_for('login'))
 
@@ -294,26 +298,40 @@ def friends():
     for person in friends_list:
         person[0].user_image = user_profile_image(db_image=person[0].user_image, email=person[0].email)
 
+    for person in friends_list:
+        checker_list.append(person[0])
 
     if request.method == "POST":
         action = request.form.get("action")
 
         if action == "search":
+            intermediate_results = []
+            final_results = []
+
             search_term = request.form.get("search-term")
             search_term = "%{}%".format(search_term)
             query_1 = Users.query.filter(Users.user.like(search_term)).all()
             query_2 = Users.query.filter(Users.email.like(search_term)).all()
-            search_results = query_1 + query_2
-            search_results = list(dict.fromkeys(search_results))
-            for person in search_results:
+            query_results = query_1 + query_2
+            query_results = list(dict.fromkeys(query_results))
+            for person in query_results:
                 person.user_image = user_profile_image(db_image=person.user_image, email=person.email)
 
             # Remove yourself
-            for person in search_results:
+            for person in query_results:
                 if person.id == user_id:
-                    search_results.remove(person)
+                    query_results.remove(person)
                     break
-            return render_template("friends.html", msg=msg, cate=cate, user_name=user_name, prof_pic=prof_pic, search_results=search_results, friends_list=friends_list)
+            
+            for person in query_results:
+                if person.acc_privacy:
+                    intermediate_results.append(person)
+
+            for person in intermediate_results:
+                if person not in checker_list:
+                    final_results.append(person)
+            
+            return render_template("friends.html", msg=msg, cate=cate, user_name=user_name, prof_pic=prof_pic, final_results=final_results, friends_list=friends_list)
 
     return render_template("friends.html", msg=msg, cate=cate, user_name=user_name, prof_pic=prof_pic, friends_list=friends_list)
 

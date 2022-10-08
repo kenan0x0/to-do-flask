@@ -596,3 +596,8 @@ textarea{
     flex-wrap: wrap;
     gap: 5px;
 }
+
+#no-friends-banner{
+    padding: 10px;
+    text-align: center;
+}

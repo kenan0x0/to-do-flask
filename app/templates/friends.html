@@ -80,7 +80,7 @@
         <h3>Friends</h3>
         <hr>
         {% if friends_list|length == 0 %}
-        <p>You have no friends. Search for and add friends using the search function below!</p>
+        <p id="no-friends-banner">You have no friends. Search for and add friends using the search function below!</p>
         {% else %}
         <div id="friends-zone">
             {% for person in friends_list %}
@@ -104,10 +104,10 @@
                 <input type="hidden" name="action" value="search">
                 <input type="submit" value="Search">
             </form>
-            {% if search_results %}
+            {% if final_results %}
             <p>Results</p>
                 <div id="res-block">
-                {% for person in search_results %}
+                {% for person in final_results %}
                     <div class="person-item">
                         <img src="{{person.user_image}}" alt="{{person.user}} profile image" width="50px" height="50px" style="border-radius: 50%;">
                         <div class="user-details">
