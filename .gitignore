@@ -10,6 +10,7 @@ yarn-error.log
 env/
 env__/
 .vscode/symbols.json
+app/db.sqlite3
 __pycache__/
 
 app/static/assets/node_modules

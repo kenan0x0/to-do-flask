@@ -683,3 +683,17 @@ textarea{
     flex-direction: row;
     align-items: flex-start;
 }
+
+.date-dot{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+}
+
+.blue-dot{
+    height: 12px;
+    width: 12px;
+    background-color: #2E89FF;
+    border-radius: 50%;
+}
