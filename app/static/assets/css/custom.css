@@ -601,3 +601,15 @@ textarea{
     padding: 10px;
     text-align: center;
 }
+
+#friend-phrase{
+    padding: 10px;
+}
+
+#friend-count{
+    background-color: rgb(23, 44, 52);
+    color: white;
+    font-weight: bold;
+    padding: 2px;
+    border-radius: 3px;
+}

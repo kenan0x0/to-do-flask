@@ -82,6 +82,7 @@
         {% if friends_list|length == 0 %}
         <p id="no-friends-banner">You have no friends. Search for and add friends using the search function below!</p>
         {% else %}
+        <p id="friend-phrase"><span id="friend-count">{{friend_count}}</span> friend(s) found</p>
         <div id="friends-zone">
             {% for person in friends_list %}
                 <div class="person-item-zone">

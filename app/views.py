@@ -298,6 +298,8 @@ def friends():
     for person in friends_list:
         person[0].user_image = user_profile_image(db_image=person[0].user_image, email=person[0].email)
 
+
+    friend_count = len(friends_list)
     for person in friends_list:
         checker_list.append(person[0])
 
@@ -331,9 +333,9 @@ def friends():
                 if person not in checker_list:
                     final_results.append(person)
             
-            return render_template("friends.html", msg=msg, cate=cate, user_name=user_name, prof_pic=prof_pic, final_results=final_results, friends_list=friends_list)
+            return render_template("friends.html", msg=msg, cate=cate, user_name=user_name, prof_pic=prof_pic, final_results=final_results, friends_list=friends_list, friend_count=friend_count)
 
-    return render_template("friends.html", msg=msg, cate=cate, user_name=user_name, prof_pic=prof_pic, friends_list=friends_list)
+    return render_template("friends.html", msg=msg, cate=cate, user_name=user_name, prof_pic=prof_pic, friends_list=friends_list, friend_count=friend_count)
 
 # Add friends handler
 @app.route("/add-friend/<friend_id>", methods=['GET', 'POST'])
