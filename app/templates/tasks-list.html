@@ -39,10 +39,15 @@
         {% endif %}
     </div>
 
-    {% if notifications|length > 0 %}
+    {% if notifications|length == 0 %}
+        <div id="notification-menu">
+            <div class="no-noti"><p>You're all caught up <i class="material-icons">celebration</i></p></div>
+        </div>
+    {% else %}
         <div id="notification-menu">
             <ul>
                 {% for noti in notifications %}
+                    <div class="date-dot"><span class="blue-dot"></span><span class="noti-date">{{noti.notification_date}}</span></div>
                     <li><div class="noti-item"><p>{{noti.notification}}</p><i class="material-icons" onclick="location.href = '/delete-notification/{{noti.id}}'">clear</i></div></li>
                     <hr>
                 {% endfor %}
