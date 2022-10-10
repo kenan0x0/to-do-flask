@@ -642,7 +642,7 @@ textarea{
 
 
 #notification-menu {
-    background: #232629;
+    background: rgba(23, 44, 52, 0.9);
     position: fixed;
     width: 250px;
     transition: all 600ms ease 0s;
