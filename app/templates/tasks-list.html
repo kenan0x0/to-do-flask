@@ -122,6 +122,17 @@
                             <a class="action-item" href="/handleTasks/{{task.id}}/ro">Reopen |</a>
                             <a class="action-item" href="#edit-modal-{{task.id}}" rel="modal:open">Edit</a>
                         </div>
+                        <div class="task-overdue">
+                            {% if today_date > task.task_date%}
+                                {% set amount = today_date - task.task_date %}
+                                <p style="color: darkred;">Overdue by {{amount.days}} day(s)</p>
+                                <i style="color: darkred;" class="material-icons">watch_later</i>
+                            {% else %}
+                                {% set amount = task.task_date - today_date %}
+                                <p style="color: darkgreen;">On time. {{amount.days}} day(s) to go</p>
+                                <i style="color: darkgreen;" class="material-icons">check</i>
+                            {% endif %}
+                        </div>
                     </div>
                 {% endfor %}
             {% endif %}

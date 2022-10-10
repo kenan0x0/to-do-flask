@@ -168,9 +168,10 @@ def tasks_list():
 
     user_id = Users.query.filter_by(email=current_user.email).first().id
     user_tasks = Tasks.query.filter_by(user_id=user_id).all()
+    today_date = datetime.now().date()
     notifications = Notifications.query.filter_by(user_id=user_id).all()
     
-    return render_template('tasks-list.html', msg=msg, cate=cate, user_tasks=user_tasks, user_name=user_name, prof_pic=prof_pic, notifications=notifications)
+    return render_template('tasks-list.html', msg=msg, cate=cate, user_tasks=user_tasks, user_name=user_name, prof_pic=prof_pic, notifications=notifications, today_date=today_date)
 
 
 @app.route('/notes', methods=['GET', 'POST'])
