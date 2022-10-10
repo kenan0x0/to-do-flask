@@ -715,7 +715,7 @@ textarea{
 
 #options-list{
     margin-top: 15px;
-    list-style: inside;
+    list-style: inside square;
 }
 
 #options-list a{
