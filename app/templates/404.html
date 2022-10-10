@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='assets/img/favicon.ico') }}">
+
+    <!-- Navbar -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://kenan0x0.github.io/to-do-flask/app/static/assets/js/jquery.jside.menu.js"></script>
+    <link rel="stylesheet" href="https://kenan0x0.github.io/to-do-flask/app/static/assets/css/jside-menu.css">
+    <link rel="stylesheet" href="https://kenan0x0.github.io/to-do-flask/app/static/assets/css/jside-skins.css">
+
+    <!-- Global -->
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/css/custom.css') }}">
+    <title>Add Task - To Do List</title>
+</head>
+<body>
+    <div class="notification-wrapper" id="trigger">
+        <i class="material-icons">notifications</i></a>
+        {% if notifications|length > 0 %}
+            <p title="{{notifications|length}} notification(s)" class="notification-count"><span>{{notifications|length}}</span></p>
+        {% endif %}
+    </div>
+
+    {% if notifications|length == 0 %}
+        <div id="notification-menu">
+            <div class="no-noti"><p>You're all caught up </p><i class="material-icons">celebration</i></div>
+        </div>
+    {% else %}
+        <div id="notification-menu">
+            <ul>
+                {% for noti in notifications %}
+                    <div class="date-dot"><span class="blue-dot"></span><span class="noti-date">{{noti.notification_date}}</span></div>
+                    <li><div class="noti-item"><p>{{noti.notification}}</p><i class="material-icons" onclick="location.href = '/delete-notification/{{noti.id}}'">clear</i></div></li>
+                    <hr>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <menu class="menubar">
+        <menuitem>
+           <button class="menu-trigger"> <i class="material-icons">menu</i> </button>
+        </menuitem>
+    </menu>
+    <div class="menu-body visibility">
+    <div class="menu-head">
+        <span class="layer">
+            <div class="col">
+                <div class="row for-pic">
+                <div class="profile-pic">     
+                    <img src="{{prof_pic}}" alt="Profile Image" /> 
+                </div>
+                </div>
+                <div class="row for-name">
+                <h3 title="Username">{{user_name}}</h3>
+                <span class="tagline">User</span>
+                </div>
+            </div>
+        </span>
+    </div>
+    <nav class="menu-container">
+        <ul class="menu-items">
+            <li><a href="/"> <i class="material-icons">speed</i>Dashboard</a></li>
+            <li><a href="/add-task"> <i class="material-icons">edit</i>Add Task</a></li>
+            <li> <a href="/tasks-list">  <i class="material-icons">checklist</i>Tasks List</a></li>
+            <li> <a href="/notes">  <i class="material-icons">note_add</i>Notes</a></li>
+            <li> <a href="/friends">  <i class="material-icons">group</i>People</a></li>
+            <li> <a href="/settings">  <i class="material-icons">settings</i>Settings</a></li>
+            <li> <a href="/logout">  <i class="material-icons">logout</i>Logout</a></li>
+        </ul>
+    </nav>
+    </div>
+
+
+    <!-- Page content goes here -->
+    <div class="page-cont">
+        <h3>Oops, you've discovered a path that doesn't seem to exist!</h3>
+        <ul id="options-list">
+            What can you do?
+            <li>Return to homepage <a href="/">here</a>.</li>
+            <li>Logout <a href="/logout">here</a>.</li>
+            <li>Are you convinced that this is an error. Contact us <a href="mailto:kenan.alnakoula@hva.nl">via e-mail</a>.</li>
+        </ul>
+        <img id="image-404" src="{{url_for('static', filename='assets/img/404.svg')}}" alt="404 page not found!">
+    </div>
+     
+     
+
+     <script>
+     $(function(){
+     $(".menu-container").jSideMenu({
+         jSidePosition: "position-left",
+         jSideSticky: true,
+         jSideSkin: "moonlit",
+          });
+     }); 
+     </script>
+
+    <script>
+        $("#trigger").click(function() {
+            $("#notification-menu").toggleClass("active");
+        });
+
+        $("#trigger").click(function() {
+            $("#trigger").toggleClass("active");
+        });
+    </script>
+    
+
+
+    {% include "footer.html" %}
+</body>
+</html>

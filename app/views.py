@@ -433,4 +433,9 @@ def handle_note_deletions(note_id):
 
 @app.errorhandler(404)
 def not_found(e):
-  return redirect(url_for("index"))
+    if not current_user.is_authenticated:
+       return redirect(url_for('login'))
+    user_name = Users.query.filter_by(email=current_user.email).first().user
+    prof_pic = Users.query.filter_by(email=current_user.email).first().user_image
+    prof_pic = user_profile_image(db_image=prof_pic, email=current_user.email)
+    return render_template("404.html", user_name=user_name, prof_pic=prof_pic)

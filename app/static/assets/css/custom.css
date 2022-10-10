@@ -704,3 +704,24 @@ textarea{
     flex-direction: row;
     align-items: center;
 }
+
+#image-404{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+    height: 70%;
+}
+
+#options-list{
+    margin-top: 15px;
+    list-style: inside;
+}
+
+#options-list a{
+    color: black;
+}
+
+#options-list a:hover{
+    color: #2E89FF;
+}
