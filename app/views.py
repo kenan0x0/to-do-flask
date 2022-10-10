@@ -119,11 +119,11 @@ def index():
 
 @app.route('/add-task', methods=['GET', 'POST'])
 def add_task():
-    msg = None
-    cate = None
-
     if not current_user.is_authenticated:
        return redirect(url_for('login'))
+
+    msg = None
+    cate = None
 
     user_id = Users.query.filter_by(email=current_user.email).first().id
     user_name = Users.query.filter_by(email=current_user.email).first().user
@@ -156,14 +156,14 @@ def add_task():
 
 @app.route('/tasks-list', methods=['GET', 'POST'])
 def tasks_list():
+    if not current_user.is_authenticated:
+       return redirect(url_for('login'))
+    
     msg = None
     cate = None
     user_name = Users.query.filter_by(email=current_user.email).first().user
     prof_pic = Users.query.filter_by(email=current_user.email).first().user_image
     prof_pic = user_profile_image(db_image=prof_pic, email=current_user.email)
-
-    if not current_user.is_authenticated:
-       return redirect(url_for('login'))
 
 
     user_id = Users.query.filter_by(email=current_user.email).first().id
@@ -175,14 +175,14 @@ def tasks_list():
 
 @app.route('/notes', methods=['GET', 'POST'])
 def notes():
+    if not current_user.is_authenticated:
+       return redirect(url_for('login'))
+    
     msg = None
     cate = None
     user_name = Users.query.filter_by(email=current_user.email).first().user
     prof_pic = Users.query.filter_by(email=current_user.email).first().user_image
     prof_pic = user_profile_image(db_image=prof_pic, email=current_user.email)
-
-    if not current_user.is_authenticated:
-       return redirect(url_for('login'))
 
 
     user_id = Users.query.filter_by(email=current_user.email).first().id
@@ -204,6 +204,10 @@ def notes():
 
 @app.route('/settings', methods=['GET', 'POST'])
 def settings():
+    if not current_user.is_authenticated:
+       return redirect(url_for('login'))
+    
+    
     msg = None
     cate = None
     user_name = Users.query.filter_by(email=current_user.email).first().user
@@ -213,8 +217,6 @@ def settings():
     user_id = Users.query.filter_by(email=current_user.email).first().id
     notifications = Notifications.query.filter_by(user_id=user_id).all()
 
-    if not current_user.is_authenticated:
-       return redirect(url_for('login'))
 
     account_discoverable = user_obj.acc_privacy
     todos_discoverable = user_obj.todos_privacy
@@ -271,6 +273,10 @@ def settings():
 
 @app.route("/friends", methods=['GET', 'POST'])
 def friends():
+    if not current_user.is_authenticated:
+       return redirect(url_for('login'))
+
+    
     msg = None
     cate = None
     user_name = Users.query.filter_by(email=current_user.email).first().user
@@ -281,8 +287,6 @@ def friends():
     # Used to remove exisitng friends from the search results
     checker_list = []
 
-    if not current_user.is_authenticated:
-       return redirect(url_for('login'))
 
     user_id = Users.query.filter_by(email=current_user.email).first().id
 
