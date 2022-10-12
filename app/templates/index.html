@@ -141,7 +141,8 @@
         <div class="modal" id="event-modal-{{event[3]}}">
             <h3>{{event[1]}}</h3>
             <hr>
-            <p>{{event[2]}}</p>
+            <span style="float: right; margin-top: 5px;" class="task-prio-{{event[4]}}">{{event[4]}}</span>
+            <p class="calendar-body">{{event[2]}}</p>
         </div>
     {% endfor %}
      

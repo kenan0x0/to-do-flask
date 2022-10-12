@@ -786,3 +786,9 @@ textarea{
     padding: 5px;
     border-radius: 10px;
 }
+
+.calendar-body{
+    clear: both;
+    text-align: justify;
+    text-justify: inter-word;
+}

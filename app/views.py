@@ -114,7 +114,7 @@ def index():
             tasks_ongoing += 1
     tasks_total = len(user_tasks)
 
-    calendar_tasks = [[task.task_date.strftime("%m/%d/%Y").replace("/","-"), task.task_title, task.task_body, task.id] for task in user_tasks]
+    calendar_tasks = [[task.task_date.strftime("%m/%d/%Y").replace("/","-"), task.task_title, task.task_body, task.id, task.task_priority] for task in user_tasks]
     
     return render_template('index.html', user_name=user_name, calendar_tasks=calendar_tasks, prof_pic=prof_pic, tasks_total=tasks_total, tasks_finished=tasks_finished, tasks_ongoing=tasks_ongoing, account_creation=account_creation, user_notes=user_notes, notifications=notifications)
 
