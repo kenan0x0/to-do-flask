@@ -163,6 +163,19 @@
                 <input type="text" name="label-{{task.id}}" id="label-{{task.id}}" value="{{task.task_category}}">
             </label>
 
+            <label class="form_elem_edit" for="task-priority-{{task.id}}">
+                Task Priority
+                <select name="task-priority-{{task.id}}" id="task-priority-{{task.id}}">
+                    {% set priorities = ['Low', 'Normal', 'Important', 'Critical'] %}
+                    <option value="{{task.task_priority}}" selected>{{task.task_priority}}</option>
+                    {% for prio in priorities %}
+                        {% if prio != task.task_priority %}
+                            <option value="{{prio}}">{{prio}}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </label>
+
             <label class="form_elem_edit" for="task_date-{{task.id}}">
                 Task Date
                 <input type="date" name="task_date-{{task.id}}" id="task_date-{{task.id}}" value="{{task.task_date}}">
@@ -231,6 +244,25 @@
         $("#trigger").click(function() {
             $("#trigger").toggleClass("active");
         });
+    </script>
+
+    <script>
+        let dropDowns = document.getElementsByTagName("select");
+        console.log(dropDowns);
+
+        function applyTheme(selectId){
+            const prioritySelect = new SlimSelect({
+            select: '#' + selectId,
+            placeholder: "Add priority to task",
+            showSearch: true,
+            allowDeselect: false,
+            showOptionTooltips: true
+        })}
+
+        for (let i = 0; i < dropDowns.length; i++) {
+            applyTheme(dropDowns[i].id);
+        }
+        
     </script>
     
 
