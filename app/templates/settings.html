@@ -149,7 +149,7 @@
                 <input type="hidden" name="action" value="pas">
                 <label for="password">
                     Change Password
-                    <input class="inputs" type="password" name="password" id="password" onkeyup="passwordMatching();">
+                    <input class="inputs" type="password" name="password" id="password" onkeyup="passwordMatching();" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" title="Minimum eight characters, at least one letter, one number and one special character">
                 </label>
                 <label for="confirm-password">
                     Confirm Password
