@@ -780,14 +780,14 @@ textarea{
 }
 
 .task-prio-Normal{
-    color: white;
+    color: black;
     background-color: #f2d604;
     padding: 5px;
     border-radius: 10px;
 }
 
 .task-prio-Low{
-    color: white;
+    color: black;
     background-color: #61bd4f;
     padding: 5px;
     border-radius: 10px;

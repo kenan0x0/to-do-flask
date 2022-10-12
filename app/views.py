@@ -417,12 +417,14 @@ def handle_tasks(task_id, req_type):
         new_title = request.form.get("task_title")
         new_body = request.form.get("task_body")
         new_category = request.form.get("task_category")
+        new_priority = request.form.get("task_priority")
         new_date = datetime.strptime(request.form.get("task_date"), '%Y-%m-%d').date()
         task_obj = Tasks.query.filter_by(id=task_id).first()
         
         task_obj.task_title = new_title
         task_obj.task_body = new_body
         task_obj.task_category = new_category
+        task_obj.task_priority = new_priority
         task_obj.task_date = new_date
         db.session.commit()
 

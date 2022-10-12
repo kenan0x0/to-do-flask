@@ -103,7 +103,7 @@
                     <div class="ind-task">
                         <div class="task-header">
                             <h3>{{task.task_title}}</h3>
-                            <b class="task-prio-{{task.task_priority}}">{{task.task_priority}}</b>
+                            <b title="Priority: {{task.task_priority}}" class="task-prio-{{task.task_priority}}">{{task.task_priority}}</b>
                             <div class="inner-stat" title="Task Date"><i class="material-icons">event</i>{{task.task_date}}</div>
                         </div>
                         <div class="inner-stat" title="Task Description"><i class="material-icons">description</i>{{task.task_body}}</div><br>
@@ -204,12 +204,14 @@
             let taskTitle = document.getElementById("task-title-" + taskId).value;
             let taskBody = document.getElementById("task-body-" + taskId).value;
             let taskLabel = document.getElementById("label-" + taskId).value;
+            let taskPriority = document.getElementById("task-priority-" + taskId).value;
             let taskDate = document.getElementById("task_date-" + taskId).value;
 
             var formData = new FormData();
             formData.append("task_title", taskTitle);
             formData.append("task_body", taskBody);
             formData.append("task_category", taskLabel);
+            formData.append("task_priority", taskPriority);
             formData.append("task_date", taskDate);
 
             $.ajax({
@@ -248,7 +250,6 @@
 
     <script>
         let dropDowns = document.getElementsByTagName("select");
-        console.log(dropDowns);
 
         function applyTheme(selectId){
             const prioritySelect = new SlimSelect({
