@@ -97,6 +97,8 @@
             {% if user_tasks|length == 0 %}
                 <p id="no-tasks">You haven't created any tasks yet. Start <a href="/add-task">here</a>.</p>
             {% else %}
+                <p>Filter tasks</p>
+                <input type="text" id="task-filter" placeholder="Find Task">
                 {% for task in user_tasks %}
                     <div class="ind-task">
                         <div class="task-header">
@@ -207,6 +209,18 @@
             location.reload();
         }
      </script>
+
+    
+    <script>
+        $(document).ready(function(){
+            $("#task-filter").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+            $("#tasks-elem .ind-task").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+    </script>
 
     <script>
         $("#trigger").click(function() {
