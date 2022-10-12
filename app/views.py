@@ -136,12 +136,21 @@ def add_task():
     if request.method == "POST":
         task_title = request.form.get("task-title")
         new_task = request.form.get("task-body")
+        task_priority = request.form.get("priority")
         label = request.form.get("label")
         task_date = datetime.strptime(request.form.get("task_date"), '%Y-%m-%d').date()        
 
+        if task_priority == "p4":
+            task_priority = "Low"
+        elif task_priority == "p3":
+            task_priority = "Normal"
+        elif task_priority == "p2":
+            task_priority = "Important"
+        else:
+            task_priority = "Critical"
         
         if new_task is not None:
-            task = Tasks(user_id=user_id, task_title=task_title, task_body=new_task, task_completed=False, task_date=task_date, task_category=label)
+            task = Tasks(user_id=user_id, task_title=task_title, task_body=new_task, task_priority=task_priority, task_completed=False, task_date=task_date, task_category=label)
             db.session.add(task)
             db.session.commit()
             msg = "Task successfully created"
@@ -159,7 +168,7 @@ def add_task():
 def tasks_list():
     if not current_user.is_authenticated:
        return redirect(url_for('login'))
-    
+
     msg = None
     cate = None
     user_name = Users.query.filter_by(email=current_user.email).first().user

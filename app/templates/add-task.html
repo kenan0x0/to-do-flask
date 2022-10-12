@@ -104,9 +104,19 @@
                 <textarea name="task-body" id="task-body" required></textarea>
             </label>
 
+            <label class="form_elem" for="priority">
+                Task Priority*
+                <select name="priority" id="priority" required>
+                    <option value="p4">Low</option>
+                    <option value="p3">Normal</option>
+                    <option value="p2">Important</option>
+                    <option value="p1">Critical</option>
+                </select>
+            </label>
+
             <label class="form_elem" for="label">
-                Task Label
-                <select name="label" id="label">
+                Task Label*
+                <select name="label" id="label" required>
                     <option data-placeholder="true"></option>
                     {% for t_c in task_cate %}
                         <option value="{{t_c}}">{{t_c}}</option>
@@ -115,8 +125,8 @@
             </label>
 
             <label class="form_elem" for="task_date">
-                Task Date
-                <input type="text" name="task_date" id="task_date">
+                Task Date*
+                <input type="text" name="task_date" id="task_date" required>
             </label>
             <input type="submit" value="Create Task">
             <small>(*) Required</small>
@@ -157,6 +167,15 @@
      </script>
 
     <script>
+
+    const prioritySelect = new SlimSelect({
+    select: '#priority',
+    placeholder: "Add priority to task",
+    showSearch: true,
+    allowDeselect: false,
+    showOptionTooltips: true
+    })
+
     const taskSelect = new SlimSelect({
     select: '#label',
     placeholder: "Add label to task",
