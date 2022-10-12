@@ -738,3 +738,13 @@ textarea{
 #friends-search{
     margin-top: 10px;
 }
+
+.vet{
+    font-weight: bold;
+}
+
+#query-stat{
+    margin-bottom: -27px;
+    margin-left: 33px;
+    margin-top: 14px;
+}

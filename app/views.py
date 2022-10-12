@@ -10,6 +10,7 @@ from app.models import Users, Tasks, Notes, Friends, Notifications
 from datetime import datetime, timedelta
 import base64
 import hashlib
+import time
 
 @lm.user_loader
 def load_user(user_id):
@@ -320,6 +321,7 @@ def friends():
         action = request.form.get("action")
 
         if action == "search":
+            start_time = time.time()
             intermediate_results = []
             final_results = []
 
@@ -345,8 +347,11 @@ def friends():
             for person in intermediate_results:
                 if person not in checker_list:
                     final_results.append(person)
+
+            end_time = time.time()
+            elapsed_time = round((end_time - start_time), 3)
             
-            return render_template("friends.html", msg=msg, cate=cate, user_name=user_name, prof_pic=prof_pic, final_results=final_results, friends_list=friends_list, friend_count=friend_count, notifications=notifications)
+            return render_template("friends.html", msg=msg, cate=cate, user_name=user_name, prof_pic=prof_pic, final_results=final_results, friends_list=friends_list, friend_count=friend_count, notifications=notifications, elapsed_time=elapsed_time)
 
     return render_template("friends.html", msg=msg, cate=cate, user_name=user_name, prof_pic=prof_pic, friends_list=friends_list, friend_count=friend_count, notifications=notifications)
 

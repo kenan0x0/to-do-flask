@@ -127,9 +127,13 @@
                 <input type="hidden" name="action" value="search">
                 <input type="submit" value="Search">
             </form>
-            {% if final_results %}
+            {% if final_results is defined %}
             <p>Results</p>
+            <p id="query-stat"><span class="vet">{{final_results|length}}</span> result(s) in <span class="vet">{{elapsed_time}}</span> seconds</p>
                 <div id="res-block">
+                {% if not final_results %}
+                    <p id="empty-query">No users were found!</p>
+                {% else %}
                 {% for person in final_results %}
                     <div class="person-item">
                         <img src="{{person.user_image}}" alt="{{person.user}} profile image" width="50px" height="50px" style="border-radius: 50%;">
@@ -141,6 +145,7 @@
                     </div>
                 {% endfor %}
                 </div>
+            {% endif %}
             {% endif %}
         </div>
     </div>
