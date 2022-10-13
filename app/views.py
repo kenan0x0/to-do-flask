@@ -125,12 +125,17 @@ def add_task():
 
     msg = None
     cate = None
+    user_task_categories = []
 
     user_id = Users.query.filter_by(email=current_user.email).first().id
     user_name = Users.query.filter_by(email=current_user.email).first().user
     prof_pic = Users.query.filter_by(email=current_user.email).first().user_image
     prof_pic = user_profile_image(db_image=prof_pic, email=current_user.email)
-    user_task_categories = [task.task_category for task in Tasks.query.filter_by(user_id=user_id).all()]
+    defined_categories = [task.task_category for task in Tasks.query.filter_by(user_id=user_id).all()]
+    for category in defined_categories:
+        if category not in user_task_categories:
+            user_task_categories.append(category)
+
     notifications = Notifications.query.filter_by(user_id=user_id).all()
 
     if request.method == "POST":
